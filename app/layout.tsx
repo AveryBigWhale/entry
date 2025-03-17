@@ -1,9 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body style={{ margin: 0, padding: 0 }}>
 =======
+=======
+>>>>>>> e96f53cc594fe863eb81850ac3931da8b41e98e0
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -74,14 +77,20 @@ export default function RootLayout({
       <body
         className={workSans.variable}
       >
+<<<<<<< HEAD
 >>>>>>> a575b02 (Initial commit)
+=======
+>>>>>>> e96f53cc594fe863eb81850ac3931da8b41e98e0
         {children}
       </body>
     </html>
   );
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 =======
+=======
+>>>>>>> e96f53cc594fe863eb81850ac3931da8b41e98e0
 }
 
 
@@ -119,4 +128,7 @@ export default function RootLayout({
 //     </html>
 //   );
 // }
+<<<<<<< HEAD
 >>>>>>> a575b02 (Initial commit)
+=======
+>>>>>>> e96f53cc594fe863eb81850ac3931da8b41e98e0

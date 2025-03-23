@@ -1,3 +1,5 @@
+import Link from 'next/link'; // Import Link from next/link
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
       <html lang="zh-TW">
@@ -8,9 +10,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <h1 className="text-xl font-bold text-purple-600">潮間黨</h1>
               <nav>
                 <ul className="flex space-x-4 text-gray-700">
-                  <li><a href="/" className="hover:text-purple-500">首頁</a></li>
-                  <li><a href="/about" className="hover:text-purple-500">關於我們</a></li>
-                  <li><a href="/news" className="hover:text-purple-500">最新消息</a></li>
+                  <li>
+                    <Link href="/" className="hover:text-purple-500">首頁</Link>
+                  </li>
+                  <li>
+                    <Link href="/about" className="hover:text-purple-500">關於我們</Link>
+                  </li>
+                  <li>
+                    <Link href="/news" className="hover:text-purple-500">最新消息</Link>
+                  </li>
                 </ul>
               </nav>
             </div>
@@ -31,4 +39,4 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </body>
       </html>
     );
-  }
+}

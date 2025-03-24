@@ -174,16 +174,6 @@ export default function Page() {
     };
   }, [windowSize]);
 
-  // 拖曳開始：設定拼圖塊的 id
-  // const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-  //   // 修正 TypeScript 錯誤
-  //   const element = e.target as HTMLDivElement;
-  //   e.dataTransfer.setData('text', element.id);
-  //   setIsDragging(true);
-  //   // setPuzzleColor(draggingColor); // 拖曳時改變顏色
-  // };
-
-  // const BORDER_STYLE = '10px solid white';
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     e.dataTransfer.setData('text', e.currentTarget.id);
@@ -194,7 +184,7 @@ export default function Page() {
     dragImage.style.height = '100px';
     // dragImage.style.backgroundColor  = '#fff'; // Change to desired color
     dragImage.style.backgroundImage = "url('/puzzle-bg.png')",
-    
+
     dragImage.style.backgroundSize = `${backgroundSize.width}px ${backgroundSize.height}px`,
     dragImage.style.backgroundPosition = `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`,
             
@@ -248,9 +238,6 @@ export default function Page() {
   // 拖曳結束
   const handleDragEnd = () => {
     setIsDragging(false);
-    // setBorderStyle('none'); // 拖曳結束時恢復邊框樣式
-    // setBorderStyle(BORDER_STYLE); // 拖曳結束時恢復邊框樣式
-    // setPuzzleColor("#fff"); // 拖曳結束時恢復顏色
   };
 
   return (

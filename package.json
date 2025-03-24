@@ -20,6 +20,7 @@
     "next-auth": "^5.0.0-beta.25",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-draggable": "^4.4.6",
     "react-icons": "^5.5.0",
     "swiper": "^11.2.5",
     "tail": "^2.2.6",

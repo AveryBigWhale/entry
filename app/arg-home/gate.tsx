@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'; // 使用 next/navigation 路由器
 
 // import Image from 'next/image';
 import ImageLoader from '../../components/ImageLoader'; // Adjust the path as necessary
+import Draggable from 'react-draggable';
 
 
 export default function Page() {
@@ -284,36 +285,38 @@ export default function Page() {
       />
 
       {/* 可拖曳的拼圖塊 */}
-      <div
-        id="puzzlePiece"
-        draggable
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-        style={{
-          position: 'absolute',
-          left: `${puzzlePosition.x}px`,
-          top: `${puzzlePosition.y}px`,
-        //   left: isCompleted ? `${holePosition.x}px` : `${puzzlePosition.x}px`,
-        //   top: isCompleted ? `${holePosition.y}px` : `${puzzlePosition.y}px`,
-          
-          width: '100px',
-          height: '100px',
-        //   backgroundImage: "url('/puzzle-bg.png')",
-          backgroundColor: "#fff",
-          backgroundSize: `${backgroundSize.width}px ${backgroundSize.height}px`,
-          backgroundPosition: `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`,
-          cursor: 'grab',
-          opacity: isDragging ? '0.5' : '1',
-           boxShadow: isDragging 
-            ? '0 8px 16px rgba(0,0,0,0.2), 0 4px 8px rgba(0,0,0,0.1)' 
-            : '0 4px 8px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.1), 0 0 2px rgba(0,0,0,0.1)',
-          clipPath: PUZZLE_SHAPE_PIXELS,
-          WebkitClipPath: PUZZLE_SHAPE_PIXELS,
-        //   zIndex: 3,
-          zIndex: isCompleted ? 1 : 3,
-          transition: 'all 0.3s ease-in-out',
-        }}
-      />
+      <Draggable>
+        <div
+          id="puzzlePiece"
+          draggable
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+          style={{
+            position: 'absolute',
+            left: `${puzzlePosition.x}px`,
+            top: `${puzzlePosition.y}px`,
+          //   left: isCompleted ? `${holePosition.x}px` : `${puzzlePosition.x}px`,
+          //   top: isCompleted ? `${holePosition.y}px` : `${puzzlePosition.y}px`,
+            
+            width: '100px',
+            height: '100px',
+          //   backgroundImage: "url('/puzzle-bg.png')",
+            backgroundColor: "#fff",
+            backgroundSize: `${backgroundSize.width}px ${backgroundSize.height}px`,
+            backgroundPosition: `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`,
+            cursor: 'grab',
+            opacity: isDragging ? '0.5' : '1',
+            boxShadow: isDragging 
+              ? '0 8px 16px rgba(0,0,0,0.2), 0 4px 8px rgba(0,0,0,0.1)' 
+              : '0 4px 8px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.1), 0 0 2px rgba(0,0,0,0.1)',
+            clipPath: PUZZLE_SHAPE_PIXELS,
+            WebkitClipPath: PUZZLE_SHAPE_PIXELS,
+          //   zIndex: 3,
+            zIndex: isCompleted ? 1 : 3,
+            transition: 'all 0.3s ease-in-out',
+          }}
+        />
+      </Draggable>
 
       {/* 被切下來的底圖 */}
       <div

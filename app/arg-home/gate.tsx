@@ -23,7 +23,7 @@ export default function Page() {
 
 
   // const [borderStyle, setBorderStyle] = useState('none'); // 新增狀態來管理邊框樣式
-  const [borderStyle, setBorderStyle] = useState('2px solid white'); // 初始邊框樣式
+  // const [borderStyle, setBorderStyle] = useState('2px solid white'); // 初始邊框樣式
 
 
   // 定義拼圖形狀
@@ -215,7 +215,7 @@ export default function Page() {
       document.body.removeChild(dragImage);
     }, 0);
     setIsDragging(true);
-    setBorderStyle(BORDER_STYLE); // 拖曳時設置白色邊框
+    // setBorderStyle(BORDER_STYLE); // 拖曳時設置白色邊框
   };
 
 
@@ -249,7 +249,7 @@ export default function Page() {
   const handleDragEnd = () => {
     setIsDragging(false);
     // setBorderStyle('none'); // 拖曳結束時恢復邊框樣式
-    setBorderStyle(BORDER_STYLE); // 拖曳結束時恢復邊框樣式
+    // setBorderStyle(BORDER_STYLE); // 拖曳結束時恢復邊框樣式
     // setPuzzleColor("#fff"); // 拖曳結束時恢復顏色
   };
 

@@ -183,15 +183,15 @@ export default function Page() {
     dragImage.style.width = '100px';
     dragImage.style.height = '100px';
     // dragImage.style.backgroundColor  = '#fff'; // Change to desired color
-    dragImage.style.backgroundImage = `url(${ImageLoader({ src: 'puzzle-bg.png' })})`,
+    dragImage.style.backgroundImage = `url(${ImageLoader({ src: 'puzzle-bg.png' })})`;
 
-    dragImage.style.backgroundSize = `${backgroundSize.width}px ${backgroundSize.height}px`,
-    dragImage.style.backgroundPosition = `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`,
+    dragImage.style.backgroundSize = `${backgroundSize.width}px ${backgroundSize.height}px`;
+    dragImage.style.backgroundPosition = `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`;
             
     dragImage.style.opacity = '1'; // Optional: make it slightly transparent
     dragImage.style.position = 'absolute';
     dragImage.style.pointerEvents = 'none'; // Prevent interaction with the drag image
-    dragImage.style.clipPath = PUZZLE_SHAPE_PIXELS,
+    dragImage.style.clipPath = PUZZLE_SHAPE_PIXELS;
     // dragImage.style.WebkitClipPath = PUZZLE_SHAPE_PIXELS,
     // Append to body to make it visible
     document.body.appendChild(dragImage);

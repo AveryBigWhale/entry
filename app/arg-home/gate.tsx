@@ -22,6 +22,10 @@ export default function Page() {
   const [backgroundPosition, setBackgroundPosition] = useState({ x: 0, y: 0 });
 
 
+  // const [borderStyle, setBorderStyle] = useState('none'); // 新增狀態來管理邊框樣式
+  const [borderStyle, setBorderStyle] = useState('2px solid white'); // 初始邊框樣式
+
+
   // 定義拼圖形狀
   const PUZZLE_SHAPE_PIXELS = `polygon(
     20px 0px, 
@@ -58,13 +62,7 @@ export default function Page() {
     0px 20px
   )`;
 
-  const getPolygonPoints = (polygon: string) => {
-    return polygon
-      .replace(/polygon\(\s*|\s*\)/g, '') // Remove 'polygon(' and ')'
-      .split(',') // Split by comma
-      .map(point => point.trim().split(' ').map(Number)); // Convert to array of numbers
-  };
-
+  
   // 生成不重疊的位置
   useEffect(() => {
     // const maxX = window.innerWidth - 100;  // 減去拼圖寬度
@@ -185,6 +183,8 @@ export default function Page() {
   //   // setPuzzleColor(draggingColor); // 拖曳時改變顏色
   // };
 
+  const BORDER_STYLE = '10px solid white';
+
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     e.dataTransfer.setData('text', e.currentTarget.id);
 
@@ -192,7 +192,12 @@ export default function Page() {
     const dragImage = document.createElement('div');
     dragImage.style.width = '100px';
     dragImage.style.height = '100px';
-    dragImage.style.backgroundColor = '#fff'; // Change to desired color
+    // dragImage.style.backgroundColor  = '#fff'; // Change to desired color
+    dragImage.style.backgroundImage = "url('/puzzle-bg.png')",
+
+    dragImage.style.backgroundSize = `${backgroundSize.width}px ${backgroundSize.height}px`,
+    dragImage.style.backgroundPosition = `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`,
+            
     dragImage.style.opacity = '1'; // Optional: make it slightly transparent
     dragImage.style.position = 'absolute';
     dragImage.style.pointerEvents = 'none'; // Prevent interaction with the drag image
@@ -204,46 +209,15 @@ export default function Page() {
     // Set the custom drag image
     e.dataTransfer.setDragImage(dragImage, 50, 50); // Offset to center the image
 
+    
     // Remove the custom drag image after a short delay
     setTimeout(() => {
       document.body.removeChild(dragImage);
     }, 0);
     setIsDragging(true);
+    setBorderStyle(BORDER_STYLE); // 拖曳時設置白色邊框
   };
 
-  // const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-  //   console.log("Drag started"); // Debugging log
-  //   e.dataTransfer.setData('text', e.currentTarget.id);
-
-  //   // Create a canvas to draw the shape
-  //   const canvas = document.createElement('canvas');
-  //   const context = canvas.getContext('2d');
-  //   const size = 100; // Size of the shape
-  //   canvas.width = size;
-  //   canvas.height = size;
-
-  //   // Draw the polygon shape
-  //   const points = getPolygonPoints(PUZZLE_SHAPE_PIXELS);
-  //   context!.beginPath();
-  //   context!.moveTo(points[0][0], points[0][1]); // Move to the first point
-  //   points.forEach(point => {
-  //     context!.lineTo(point[0], point[1]); // Draw lines to each point
-  //   });
-  //   context!.closePath();
-  //   context!.fillStyle = 'red'; // Change to desired color
-  //   context!.fill();
-
-  //   // Set the custom drag image
-  //   e.dataTransfer.setDragImage(canvas, size / 2, size / 2); // Center the image
-
-  //   // Optional: Cleanup the canvas after setting the drag image
-  //   setTimeout(() => {
-  //     canvas.width = 0;
-  //     canvas.height = 0;
-  //   }, 0);
-  //   // setIsDragging(true);
-  // };
-  
 
   // 拖曳進入區域時顯示放置提示
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -274,6 +248,8 @@ export default function Page() {
   // 拖曳結束
   const handleDragEnd = () => {
     setIsDragging(false);
+    // setBorderStyle('none'); // 拖曳結束時恢復邊框樣式
+    setBorderStyle(BORDER_STYLE); // 拖曳結束時恢復邊框樣式
     // setPuzzleColor("#fff"); // 拖曳結束時恢復顏色
   };
 
@@ -360,7 +336,6 @@ export default function Page() {
           id="puzzlePiece"
           draggable
           onDragStart={handleDragStart}
-
           onDragEnd={handleDragEnd}
           style={{
             position: 'absolute',
@@ -370,8 +345,8 @@ export default function Page() {
           //   top: isCompleted ? `${holePosition.y}px` : `${puzzlePosition.y}px`,
             width: '100px',
             height: '100px',
-          //   backgroundImage: "url('/puzzle-bg.png')",
-            backgroundColor: "#fff",
+            backgroundImage: "url('/puzzle-bg.png')",
+            // backgroundColor: "#fff",
 
             // backgroundColor: isDragging ? 'red' : '#fff',
             // backgroundColor: puzzleColor, // 使用顏色狀態
@@ -387,7 +362,11 @@ export default function Page() {
             WebkitClipPath: PUZZLE_SHAPE_PIXELS,
           //   zIndex: 3,
             zIndex: isCompleted ? 1 : 3,
-            transition: 'all 0.3s ease-in-out',
+            // transition: 'all 0.3s ease-in-out',
+            transition: 'border 0.3s ease', // 添加邊框過渡效果
+            // border: borderStyle, // 使用邊框樣式狀態
+            outline: '4px solid white', // 使用 outline 來顯示邊框
+            outlineOffset: '-4px', // 調整邊框位置
             // transition: 'background-color 0.3s ease', 
           }}
         />

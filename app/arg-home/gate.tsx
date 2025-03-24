@@ -332,7 +332,7 @@ export default function Page() {
           //   top: isCompleted ? `${holePosition.y}px` : `${puzzlePosition.y}px`,
             width: '100px',
             height: '100px',
-            backgroundImage: "url('/puzzle-bg.png')",
+            backgroundImage: `url(${ImageLoader({ src: 'puzzle-bg.png' })})`,
             // backgroundColor: "#fff",
 
             // backgroundColor: isDragging ? 'red' : '#fff',

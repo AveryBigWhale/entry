@@ -285,7 +285,7 @@ export default function Page() {
       />
 
       {/* 可拖曳的拼圖塊 */}
-      <Draggable>
+      {/* <Draggable> */}
         <div
           id="puzzlePiece"
           draggable
@@ -316,7 +316,7 @@ export default function Page() {
             transition: 'all 0.3s ease-in-out',
           }}
         />
-      </Draggable>
+      {/* </Draggable> */}
 
       {/* 被切下來的底圖 */}
       <div

@@ -137,7 +137,8 @@ export default function Page() {
   // 計算背景圖片的實際尺寸和位置
   useEffect(() => {
     const img = new window.Image();
-    img.src = '/puzzle-bg.png';
+    // img.src = '/puzzle-bg.png';
+    img.src = 'https://averybigwhale.github.io/entry/public/puzzle-bg.png';
     img.onload = () => {
       const imgRatio = img.width / img.height;
       const windowRatio = windowSize.width / windowSize.height;
@@ -238,7 +239,8 @@ export default function Page() {
             position: 'absolute',
             width: '100%',
             height: '100%',
-            backgroundImage: "url('/puzzle-bg.png')",
+            backgroundImage: "url('https://averybigwhale.github.io/entry/public/puzzle-bg.png')",
+            // backgroundImage: "url('/puzzle-bg.png')",
             backgroundSize: 'cover',
             // backgroundSize: `${windowSize.width}px ${windowSize.height}px`,
             backgroundPosition: 'center',

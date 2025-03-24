@@ -1,12 +1,13 @@
 // app/page.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import {useState, useEffect } from 'react';
+// React, { useRef, 
 import { useRouter } from 'next/navigation'; // 使用 next/navigation 路由器
 
 // import Image from 'next/image';
 import ImageLoader from '../../components/ImageLoader'; // Adjust the path as necessary
-import Draggable from 'react-draggable';
+// import Draggable from 'react-draggable';
 
 
 export default function Page() {
@@ -20,6 +21,8 @@ export default function Page() {
   const [backgroundSize, setBackgroundSize] = useState({ width: 0, height: 0 });
   const [backgroundPosition, setBackgroundPosition] = useState({ x: 0, y: 0 });
 
+  // const nodeRef = useRef(null);
+  // const nodeRef = useRef<HTMLDivElement>(null);
   // 定義拼圖形狀
   const PUZZLE_SHAPE_PIXELS = `polygon(
     20px 0px, 
@@ -285,8 +288,9 @@ export default function Page() {
       />
 
       {/* 可拖曳的拼圖塊 */}
-      <Draggable>
+      {/* <Draggable nodeRef={nodeRef}> */}
         <div
+          // ref={nodeRef}
           id="puzzlePiece"
           draggable
           onDragStart={handleDragStart}
@@ -316,7 +320,7 @@ export default function Page() {
             transition: 'all 0.3s ease-in-out',
           }}
         />
-      </Draggable>
+      {/* </Draggable> */}
 
       {/* 被切下來的底圖 */}
       <div

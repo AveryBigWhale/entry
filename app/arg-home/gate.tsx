@@ -177,72 +177,72 @@ export default function Page() {
   }, [windowSize]);
 
   // 拖曳開始：設定拼圖塊的 id
-  // const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-  //   // 修正 TypeScript 錯誤
-  //   const element = e.target as HTMLDivElement;
-  //   e.dataTransfer.setData('text', element.id);
-  //   setIsDragging(true);
-  //   // setPuzzleColor(draggingColor); // 拖曳時改變顏色
-  // };
-
-  // const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-  //   e.dataTransfer.setData('text', e.currentTarget.id);
-
-  //   // Create a custom drag image
-  //   const dragImage = document.createElement('div');
-  //   dragImage.style.width = '100px';
-  //   dragImage.style.height = '100px';
-  //   dragImage.style.backgroundColor = '#fff'; // Change to desired color
-  //   dragImage.style.opacity = '1'; // Optional: make it slightly transparent
-  //   dragImage.style.position = 'absolute';
-  //   dragImage.style.pointerEvents = 'none'; // Prevent interaction with the drag image
-  //   dragImage.style.clipPath = PUZZLE_SHAPE_PIXELS,
-  //   // dragImage.style.WebkitClipPath = PUZZLE_SHAPE_PIXELS,
-  //   // Append to body to make it visible
-  //   document.body.appendChild(dragImage);
-
-  //   // Set the custom drag image
-  //   e.dataTransfer.setDragImage(dragImage, 50, 50); // Offset to center the image
-
-  //   // Remove the custom drag image after a short delay
-  //   setTimeout(() => {
-  //     document.body.removeChild(dragImage);
-  //   }, 0);
-  //   setIsDragging(true);
-  // };
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    // 修正 TypeScript 錯誤
+    const element = e.target as HTMLDivElement;
+    e.dataTransfer.setData('text', element.id);
+    setIsDragging(true);
+    // setPuzzleColor(draggingColor); // 拖曳時改變顏色
+  };
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    console.log("Drag started"); // Debugging log
     e.dataTransfer.setData('text', e.currentTarget.id);
 
-    // Create a canvas to draw the shape
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    const size = 100; // Size of the shape
-    canvas.width = size;
-    canvas.height = size;
-
-    // Draw the polygon shape
-    const points = getPolygonPoints(PUZZLE_SHAPE_PIXELS);
-    context!.beginPath();
-    context!.moveTo(points[0][0], points[0][1]); // Move to the first point
-    points.forEach(point => {
-      context!.lineTo(point[0], point[1]); // Draw lines to each point
-    });
-    context!.closePath();
-    context!.fillStyle = 'red'; // Change to desired color
-    context!.fill();
+    // Create a custom drag image
+    const dragImage = document.createElement('div');
+    dragImage.style.width = '100px';
+    dragImage.style.height = '100px';
+    dragImage.style.backgroundColor = '#fff'; // Change to desired color
+    dragImage.style.opacity = '1'; // Optional: make it slightly transparent
+    dragImage.style.position = 'absolute';
+    dragImage.style.pointerEvents = 'none'; // Prevent interaction with the drag image
+    dragImage.style.clipPath = PUZZLE_SHAPE_PIXELS,
+    // dragImage.style.WebkitClipPath = PUZZLE_SHAPE_PIXELS,
+    // Append to body to make it visible
+    document.body.appendChild(dragImage);
 
     // Set the custom drag image
-    e.dataTransfer.setDragImage(canvas, size / 2, size / 2); // Center the image
+    e.dataTransfer.setDragImage(dragImage, 50, 50); // Offset to center the image
 
-    // Optional: Cleanup the canvas after setting the drag image
+    // Remove the custom drag image after a short delay
     setTimeout(() => {
-      canvas.width = 0;
-      canvas.height = 0;
+      document.body.removeChild(dragImage);
     }, 0);
-    // setIsDragging(true);
+    setIsDragging(true);
   };
+
+  // const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+  //   console.log("Drag started"); // Debugging log
+  //   e.dataTransfer.setData('text', e.currentTarget.id);
+
+  //   // Create a canvas to draw the shape
+  //   const canvas = document.createElement('canvas');
+  //   const context = canvas.getContext('2d');
+  //   const size = 100; // Size of the shape
+  //   canvas.width = size;
+  //   canvas.height = size;
+
+  //   // Draw the polygon shape
+  //   const points = getPolygonPoints(PUZZLE_SHAPE_PIXELS);
+  //   context!.beginPath();
+  //   context!.moveTo(points[0][0], points[0][1]); // Move to the first point
+  //   points.forEach(point => {
+  //     context!.lineTo(point[0], point[1]); // Draw lines to each point
+  //   });
+  //   context!.closePath();
+  //   context!.fillStyle = 'red'; // Change to desired color
+  //   context!.fill();
+
+  //   // Set the custom drag image
+  //   e.dataTransfer.setDragImage(canvas, size / 2, size / 2); // Center the image
+
+  //   // Optional: Cleanup the canvas after setting the drag image
+  //   setTimeout(() => {
+  //     canvas.width = 0;
+  //     canvas.height = 0;
+  //   }, 0);
+  //   // setIsDragging(true);
+  // };
   
 
   // 拖曳進入區域時顯示放置提示

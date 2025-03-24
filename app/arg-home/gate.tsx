@@ -1,8 +1,8 @@
 // app/page.tsx
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
-// 
+import React, {  useState, useEffect } from 'react';
+// useRef,
 import { useRouter } from 'next/navigation'; // 使用 next/navigation 路由器
 
 // import Image from 'next/image';
@@ -21,10 +21,6 @@ export default function Page() {
   const [backgroundSize, setBackgroundSize] = useState({ width: 0, height: 0 });
   const [backgroundPosition, setBackgroundPosition] = useState({ x: 0, y: 0 });
 
-
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [puzzleColor, setPuzzleColor] = useState("#fff"); // 新增顏色狀態
-  const [draggingColor, setDraggingColor] = useState("#ffcc00"); // 拖曳時的顏色
 
   // 定義拼圖形狀
   const PUZZLE_SHAPE_PIXELS = `polygon(
@@ -249,11 +245,6 @@ export default function Page() {
   };
   
 
-  const handleMouseMove = (e: MouseEvent) => {
-    if (isDragging) {
-      setMousePosition({ x: e.clientX - 50, y: e.clientY - 50 }); // 調整位置以使圖塊跟隨滑鼠
-    }
-  };
   // 拖曳進入區域時顯示放置提示
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -285,18 +276,6 @@ export default function Page() {
     setIsDragging(false);
     // setPuzzleColor("#fff"); // 拖曳結束時恢復顏色
   };
-
-  // useEffect(() => {
-  //   if (isDragging) {
-  //     window.addEventListener('mousemove', handleMouseMove);
-  //   } else {
-  //     window.removeEventListener('mousemove', handleMouseMove);
-  //   }
-
-  //   return () => {
-  //     window.removeEventListener('mousemove', handleMouseMove);
-  //   };
-  // }, [isDragging]);
 
   return (
     <div style={{ 
@@ -381,8 +360,8 @@ export default function Page() {
           id="puzzlePiece"
           draggable
           onDragStart={handleDragStart}
-          // onDrag={handleDrag}
-          // onDragEnd={handleDragEnd}
+
+          onDragEnd={handleDragEnd}
           style={{
             position: 'absolute',
             left: `${puzzlePosition.x}px`,

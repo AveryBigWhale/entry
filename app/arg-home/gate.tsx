@@ -177,13 +177,13 @@ export default function Page() {
   }, [windowSize]);
 
   // 拖曳開始：設定拼圖塊的 id
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    // 修正 TypeScript 錯誤
-    const element = e.target as HTMLDivElement;
-    e.dataTransfer.setData('text', element.id);
-    setIsDragging(true);
-    // setPuzzleColor(draggingColor); // 拖曳時改變顏色
-  };
+  // const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+  //   // 修正 TypeScript 錯誤
+  //   const element = e.target as HTMLDivElement;
+  //   e.dataTransfer.setData('text', element.id);
+  //   setIsDragging(true);
+  //   // setPuzzleColor(draggingColor); // 拖曳時改變顏色
+  // };
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     e.dataTransfer.setData('text', e.currentTarget.id);

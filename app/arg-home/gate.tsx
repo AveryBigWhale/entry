@@ -194,7 +194,7 @@ export default function Page() {
     dragImage.style.height = '100px';
     // dragImage.style.backgroundColor  = '#fff'; // Change to desired color
     dragImage.style.backgroundImage = "url('/puzzle-bg.png')",
-
+    
     dragImage.style.backgroundSize = `${backgroundSize.width}px ${backgroundSize.height}px`,
     dragImage.style.backgroundPosition = `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`,
             

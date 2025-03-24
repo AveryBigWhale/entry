@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; // 使用 next/navigation 路由器
 
-import Image from 'next/image';
+// import Image from 'next/image';
 import ImageLoader from '../../components/ImageLoader'; // Adjust the path as necessary
 
 

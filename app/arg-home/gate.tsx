@@ -22,7 +22,7 @@ export default function Page() {
   const [backgroundPosition, setBackgroundPosition] = useState({ x: 0, y: 0 });
 
   // const nodeRef = useRef(null);
-  // const nodeRef = useRef<HTMLDivElement>(null);
+  const nodeRef = useRef<HTMLDivElement>(null);
   // 定義拼圖形狀
   const PUZZLE_SHAPE_PIXELS = `polygon(
     20px 0px, 

@@ -26,7 +26,7 @@ import { NextConfig } from 'next';
 const isProd = process.env.NODE_ENV === 'production';
 
 const nextConfig: NextConfig = {
-  basePath: isProd ? '/artfestarg.github.io' : '',
+  basePath: isProd ? '/artfestarg-1.github.io' : '',
   output: 'export',
   distDir: 'dist',
 };

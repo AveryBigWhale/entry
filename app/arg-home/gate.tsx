@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'; // 使用 next/navigation 路由器
 
 // import Image from 'next/image';
 import ImageLoader from '../../components/ImageLoader'; // Adjust the path as necessary
-// import Draggable from 'react-draggable';
+import Draggable from 'react-draggable';
 
 
 export default function Page() {
@@ -288,7 +288,7 @@ export default function Page() {
       />
 
       {/* 可拖曳的拼圖塊 */}
-      {/* <Draggable nodeRef={nodeRef}> */}
+      <Draggable nodeRef={nodeRef}>
         <div
           // ref={nodeRef}
           id="puzzlePiece"
@@ -320,7 +320,7 @@ export default function Page() {
             transition: 'all 0.3s ease-in-out',
           }}
         />
-      {/* </Draggable> */}
+      </Draggable>
 
       {/* 被切下來的底圖 */}
       <div

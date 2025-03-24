@@ -183,7 +183,7 @@ export default function Page() {
   //   // setPuzzleColor(draggingColor); // 拖曳時改變顏色
   // };
 
-  const BORDER_STYLE = '10px solid white';
+  // const BORDER_STYLE = '10px solid white';
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     e.dataTransfer.setData('text', e.currentTarget.id);

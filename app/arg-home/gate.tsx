@@ -21,10 +21,8 @@ export default function Page() {
   const [backgroundSize, setBackgroundSize] = useState({ width: 0, height: 0 });
   const [backgroundPosition, setBackgroundPosition] = useState({ x: 0, y: 0 });
 
-
   // const [borderStyle, setBorderStyle] = useState('none'); // 新增狀態來管理邊框樣式
   // const [borderStyle, setBorderStyle] = useState('2px solid white'); // 初始邊框樣式
-
 
   // 定義拼圖形狀
   const PUZZLE_SHAPE_PIXELS = `polygon(
@@ -61,8 +59,7 @@ export default function Page() {
     0px 30px, 
     0px 20px
   )`;
-
-  
+ 
   // 生成不重疊的位置
   useEffect(() => {
     // const maxX = window.innerWidth - 100;  // 減去拼圖寬度
@@ -224,13 +221,13 @@ export default function Page() {
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsOverDropZone(false);
-
+    
     const data = e.dataTransfer.getData('text');
     if (data === 'puzzlePiece') {
         setIsCompleted(true);  // 設置完成狀態
         // 延遲跳轉
         setTimeout(() => {
-            router.replace('/uncover');  // 使用 replace 來確保不保留當前狀態
+            router.replace('./uncover');  // 使用 replace 來確保不保留當前狀態
         }, 1200);  // 2秒後跳轉
     }
   };

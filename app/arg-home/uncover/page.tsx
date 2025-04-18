@@ -57,9 +57,9 @@ export default function NextPage() {
           zIndex: 2,
           color: 'white',
           textAlign: 'center',
-          marginBottom: '20px',
+          // marginBottom: '20px',
           maxWidth: '80%',  // 限制文字寬度
-          padding: '20px'
+          // padding: '20px'
         }}
       >
         <h2 

@@ -1,12 +1,12 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 // import ImageLoader from '../../../components/ImageLoader';
 // import Image from 'next/image';
 
 import startBg from '../../../public/start-bg.png';
 export default function NextPage() {
-  const router = useRouter();
+  // const router = useRouter();
 
   const handleStartGame = () => {
     window.location.href = "https://www.messenger.com/t/645669168623450/?ref=suuchen-kao&messaging_source=source%3Apages%3Amessage_shortlink&source_id=1441792&recurring_notification=0";

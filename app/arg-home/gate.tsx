@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'; // 使用 next/navigation 路由器
 // import Image from 'next/image';
 import ImageLoader from '../../components/ImageLoader'; // Adjust the path as necessary
 // import Draggable from 'react-draggable';
+// import puzzleBg from '../../public/puzzle-bg.png'; // Adjust the path as necessary
 
 
 export default function Page() {
@@ -143,6 +144,7 @@ export default function Page() {
   // 計算背景圖片的實際尺寸和位置
   useEffect(() => {
     const img = new window.Image();
+    // img.src = puzzleBg.src; // Use the custom loader
     img.src = ImageLoader({ src: 'puzzle-bg.png' }); // Use the custom loader
     // img.src = '/puzzle-bg.png';
     // img.src = 'https://averybigwhale.github.io/entry/public/puzzle-bg.png';
@@ -227,7 +229,7 @@ export default function Page() {
         setIsCompleted(true);  // 設置完成狀態
         // 延遲跳轉
         setTimeout(() => {
-            router.replace('./uncover');  // 使用 replace 來確保不保留當前狀態
+            router.replace('./arg-home/uncover');  // 使用 replace 來確保不保留當前狀態
         }, 1200);  // 2秒後跳轉
     }
   };

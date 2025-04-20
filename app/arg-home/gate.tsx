@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'; // 使用 next/navigation 路由器
 // import Image from 'next/image';
 import ImageLoader from '../../components/ImageLoader'; // Adjust the path as necessary
 // import Draggable from 'react-draggable';
-// import puzzleBg from '../../public/puzzle-bg.png'; // Adjust the path as necessary
+// import puzzleBg from '../../public/puzzle-bg-2.png'; // Adjust the path as necessary
 
 
 export default function Page() {
@@ -244,9 +244,9 @@ useEffect(() => {
   useEffect(() => {
     const img = new window.Image();
     // img.src = puzzleBg.src; // Use the custom loader
-    img.src = ImageLoader({ src: 'puzzle-bg.png' }); // Use the custom loader
-    // img.src = '/puzzle-bg.png';
-    // img.src = 'https://averybigwhale.github.io/entry/public/puzzle-bg.png';
+    img.src = ImageLoader({ src: 'puzzle-bg-2.png' }); // Use the custom loader
+    // img.src = '/puzzle-bg-2.png';
+    // img.src = 'https://averybigwhale.github.io/entry/public/puzzle-bg-2.png';
     img.onload = () => {
       const imgRatio = img.width / img.height;
       const windowRatio = windowSize.width / windowSize.height;
@@ -281,7 +281,7 @@ useEffect(() => {
     dragImage.style.width = '100px';
     dragImage.style.height = '100px';
     // dragImage.style.backgroundColor  = '#fff'; // Change to desired color
-    dragImage.style.backgroundImage = `url(${ImageLoader({ src: 'puzzle-bg.png' })})`;
+    dragImage.style.backgroundImage = `url(${ImageLoader({ src: 'puzzle-bg-2.png' })})`;
 
     dragImage.style.backgroundSize = `${backgroundSize.width}px ${backgroundSize.height}px`;
     dragImage.style.backgroundPosition = `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`;
@@ -396,9 +396,9 @@ useEffect(() => {
             position: 'absolute',
             width: '100%',
             height: '100%',
-            // backgroundImage: "url('https://averybigwhale.github.io/entry/public/puzzle-bg.png')",
-            // backgroundImage: "url('/puzzle-bg.png')",
-            backgroundImage: `url(${ImageLoader({ src: 'puzzle-bg.png' })})`,
+            // backgroundImage: "url('https://averybigwhale.github.io/entry/public/puzzle-bg-2.png')",
+            // backgroundImage: "url('/puzzle-bg-2.png')",
+            backgroundImage: `url(${ImageLoader({ src: 'puzzle-bg-2.png' })})`,
             backgroundSize: 'cover',
             // backgroundSize: `${windowSize.width}px ${windowSize.height}px`,
             backgroundPosition: 'center',
@@ -476,7 +476,7 @@ useEffect(() => {
         //   top: isCompleted ? `${holePosition.y}px` : `${puzzlePosition.y}px`,
           width: '100px',
           height: '100px',
-          backgroundImage: `url(${ImageLoader({ src: 'puzzle-bg.png' })})`,
+          backgroundImage: `url(${ImageLoader({ src: 'puzzle-bg-2.png' })})`,
           // backgroundColor: "#fff",
 
           // backgroundColor: isDragging ? 'red' : '#fff',
@@ -530,9 +530,9 @@ useEffect(() => {
           top: `${holePosition.y}px`,
           width: '100px',
           height: '100px',
-          // backgroundImage: "url('https://averybigwhale.github.io/entry/public/puzzle-bg.png')",
-          // backgroundImage: "url('/puzzle-bg.png')",
-          backgroundImage: `url(${ImageLoader({ src: 'puzzle-bg.png' })})`,
+          // backgroundImage: "url('https://averybigwhale.github.io/entry/public/puzzle-bg-2.png')",
+          // backgroundImage: "url('/puzzle-bg-2.png')",
+          backgroundImage: `url(${ImageLoader({ src: 'puzzle-bg-2.png' })})`,
           backgroundSize: `${backgroundSize.width}px ${backgroundSize.height}px`,
           backgroundPosition: `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`,
           clipPath: PUZZLE_SHAPE_PIXELS,
@@ -555,9 +555,9 @@ useEffect(() => {
           top: `${holePosition.y}px`,
           width: '100px',
           height: '100px',
-          // backgroundImage: "url('https://averybigwhale.github.io/entry/public/puzzle-bg.png')",
-          // backgroundImage: "url('/puzzle-bg.png')",
-          backgroundImage: `url(${ImageLoader({ src: 'puzzle-bg.png' })})`,
+          // backgroundImage: "url('https://averybigwhale.github.io/entry/public/puzzle-bg-2.png')",
+          // backgroundImage: "url('/puzzle-bg-2.png')",
+          backgroundImage: `url(${ImageLoader({ src: 'puzzle-bg-2.png' })})`,
           backgroundSize: `${backgroundSize.width}px ${backgroundSize.height}px`,
           backgroundPosition: `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`,
           opacity: isOverDropZone && !isCompleted ? 0.5 : 0,

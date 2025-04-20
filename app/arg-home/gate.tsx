@@ -62,15 +62,15 @@ export default function Page() {
   )`;
 
 
-  // 檢查一個大小為 size 的區塊，其左上角位於 (x, y) 是否與 safeZone 重疊
-  function isInSafeZone(x: number, y: number, size: number): boolean {
+  const isInSafeZone = React.useCallback((x: number, y: number, size: number): boolean => {
     return (
-      x + size > safeZone.x &&
-      x < safeZone.x + safeZone.width &&
-      y + size > safeZone.y &&
-      y < safeZone.y + safeZone.height
+      x + size > window.innerWidth * 0.18 &&
+      x < window.innerWidth * 0.18 + window.innerWidth * 0.22 &&
+      y + size > window.innerHeight * 0.35 &&
+      y < window.innerHeight * 0.35 + window.innerHeight * 0.35
     );
-  }
+  }, []);
+
 useEffect(() => {
   const PUZZLE_SIZE = 100;
   const SAFE_DISTANCE = 150; // 確保拼圖與缺口垂直方向也有足夠距離
@@ -113,7 +113,7 @@ useEffect(() => {
     setPuzzlePosition({ x: puzzleX, y: puzzleY });
     setHolePosition({ x: holeX, y: holeY });
   }
-}, []);
+}, [isInSafeZone]);
   
 
   useEffect(() => {
@@ -332,22 +332,13 @@ useEffect(() => {
         }, 1200);  // 2秒後跳轉
     }
   };
-  
+
 
   // 拖曳結束
   const handleDragEnd = () => {
     setIsDragging(false);
   };
 
-
-
-  // 定義 safeZone：避開畫面左右、上下各 20%
-  const safeZone = {
-    x: window.innerWidth * 0.18,
-    y: window.innerHeight * 0.35,
-    width: window.innerWidth * 0.22,
-    height: window.innerHeight * 0.35,
-  };
   // left: `${window.innerWidth * 0.18}px`,
   //         top: `${window.innerHeight * 0.35}px`,
   //         width: `${window.innerWidth * 0.22}px`,

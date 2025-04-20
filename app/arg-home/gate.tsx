@@ -60,67 +60,166 @@ export default function Page() {
     0px 30px, 
     0px 20px
   )`;
- 
-  // 生成不重疊的位置
-  useEffect(() => {
-    // const maxX = window.innerWidth - 100;  // 減去拼圖寬度
-    // const maxY = window.innerHeight - 100; // 減去拼圖高度
-    // const randomX = Math.floor(Math.random() * maxX);
-    // const randomY = Math.floor(Math.random() * maxY);
-    // setHolePosition({ x: randomX, y: randomY });
-    const PUZZLE_SIZE = 100;
-    const SAFE_DISTANCE = 150; // 確保兩個位置之間有足夠的距離
 
-    // 將畫面分成左右兩半
-    const leftHalf = Math.floor(window.innerWidth / 2) - PUZZLE_SIZE;
-    const rightHalf = Math.floor(window.innerWidth / 2);
 
-    // 隨機決定拼圖塊在左邊還是右邊
-    const isPuzzleOnLeft = Math.random() > 0.5;
+  // 檢查一個大小為 size 的區塊，其左上角位於 (x, y) 是否與 safeZone 重疊
+  function isInSafeZone(x: number, y: number, size: number): boolean {
+    return (
+      x + size > safeZone.x &&
+      x < safeZone.x + safeZone.width &&
+      y + size > safeZone.y &&
+      y < safeZone.y + safeZone.height
+    );
+  }
+useEffect(() => {
+  const PUZZLE_SIZE = 100;
+  const SAFE_DISTANCE = 150; // 確保拼圖與缺口垂直方向也有足夠距離
+  
+  // 將畫面分成左右兩半
+  const leftHalf = Math.floor(window.innerWidth / 2) - PUZZLE_SIZE;
+  const rightHalf = Math.floor(window.innerWidth / 2);
 
-    // 生成拼圖塊的位置
-    const puzzleX = isPuzzleOnLeft
+  const isPuzzleOnLeft = Math.random() > 0.5;
+  
+  let puzzleX: number, puzzleY: number, holeX: number, holeY: number;
+  
+  // 生成拼圖塊的位置（避開 safeZone）
+  do {
+    puzzleX = isPuzzleOnLeft
       ? Math.floor(Math.random() * (leftHalf - PUZZLE_SIZE))
       : Math.floor(Math.random() * (window.innerWidth - rightHalf - PUZZLE_SIZE)) + rightHalf;
-    const puzzleY = Math.floor(Math.random() * (window.innerHeight - PUZZLE_SIZE));
-    
-    // 生成缺口的位置（在另一半）
-    const holeX = !isPuzzleOnLeft
+    puzzleY = Math.floor(Math.random() * (window.innerHeight - PUZZLE_SIZE));
+  } while (isInSafeZone(puzzleX, puzzleY, PUZZLE_SIZE));
+
+  // 生成缺口的位置（在另一半且避開 safeZone）
+  do {
+    holeX = !isPuzzleOnLeft
       ? Math.floor(Math.random() * (leftHalf - PUZZLE_SIZE))
       : Math.floor(Math.random() * (window.innerWidth - rightHalf - PUZZLE_SIZE)) + rightHalf;
-    const holeY = Math.floor(Math.random() * (window.innerHeight - PUZZLE_SIZE));
-
-    // 確保垂直方向也有足夠距離
-    if (Math.abs(puzzleY - holeY) < SAFE_DISTANCE) {
-      const offset = SAFE_DISTANCE - Math.abs(puzzleY - holeY);
-      if (puzzleY < window.innerHeight / 2) {
-        setPuzzlePosition({ x: puzzleX, y: puzzleY });
-        setHolePosition({ x: holeX, y: holeY + offset });
-        console.log('位置生成 (上半部調整):', {
-          puzzle: { x: puzzleX, y: puzzleY },
-          hole: { x: holeX, y: holeY + offset },
-          isPuzzleOnLeft
-        });
-      } else {
-        setPuzzlePosition({ x: puzzleX, y: puzzleY });
-        setHolePosition({ x: holeX, y: Math.max(0, holeY - offset) });
-        console.log('位置生成 (下半部調整):', {
-          puzzle: { x: puzzleX, y: puzzleY },
-          hole: { x: holeX, y: Math.max(0, holeY - offset) },
-          isPuzzleOnLeft
-        });
-      }
+    holeY = Math.floor(Math.random() * (window.innerHeight - PUZZLE_SIZE));
+  } while (isInSafeZone(holeX, holeY, PUZZLE_SIZE));
+  
+  // 確保垂直方向也有足夠距離
+  if (Math.abs(puzzleY - holeY) < SAFE_DISTANCE) {
+    const offset = SAFE_DISTANCE - Math.abs(puzzleY - holeY);
+    if (puzzleY < window.innerHeight / 2) {
+      setPuzzlePosition({ x: puzzleX, y: puzzleY });
+      setHolePosition({ x: holeX, y: holeY + offset });
     } else {
       setPuzzlePosition({ x: puzzleX, y: puzzleY });
-      setHolePosition({ x: holeX, y: holeY });
-      console.log('位置生成 (無需調整):', {
-        puzzle: { x: puzzleX, y: puzzleY },
-        hole: { x: holeX, y: holeY },
-        isPuzzleOnLeft
-      });
+      setHolePosition({ x: holeX, y: Math.max(0, holeY - offset) });
     }
+  } else {
+    setPuzzlePosition({ x: puzzleX, y: puzzleY });
+    setHolePosition({ x: holeX, y: holeY });
+  }
+}, []);
+  
+
+  useEffect(() => {
+  const PUZZLE_SIZE = 100;
+  const SAFE_DISTANCE = 150; // 確保拼圖與缺口垂直方向也有足夠距離
+  
+  // 將畫面分成左右兩半
+  const leftHalf = Math.floor(window.innerWidth / 2) - PUZZLE_SIZE;
+  const rightHalf = Math.floor(window.innerWidth / 2);
+
+  const isPuzzleOnLeft = Math.random() > 0.5;
+  
+  let puzzleX: number, puzzleY: number, holeX: number, holeY: number;
+  
+  // 生成拼圖塊的位置（避開 safeZone）
+  do {
+    puzzleX = isPuzzleOnLeft
+      ? Math.floor(Math.random() * (leftHalf - PUZZLE_SIZE))
+      : Math.floor(Math.random() * (window.innerWidth - rightHalf - PUZZLE_SIZE)) + rightHalf;
+    puzzleY = Math.floor(Math.random() * (window.innerHeight - PUZZLE_SIZE));
+  } while (isInSafeZone(puzzleX, puzzleY, PUZZLE_SIZE));
+
+  // 生成缺口的位置（在另一半且避開 safeZone）
+  do {
+    holeX = !isPuzzleOnLeft
+      ? Math.floor(Math.random() * (leftHalf - PUZZLE_SIZE))
+      : Math.floor(Math.random() * (window.innerWidth - rightHalf - PUZZLE_SIZE)) + rightHalf;
+    holeY = Math.floor(Math.random() * (window.innerHeight - PUZZLE_SIZE));
+  } while (isInSafeZone(holeX, holeY, PUZZLE_SIZE));
+  
+  // 確保垂直方向也有足夠距離
+  if (Math.abs(puzzleY - holeY) < SAFE_DISTANCE) {
+    const offset = SAFE_DISTANCE - Math.abs(puzzleY - holeY);
+    if (puzzleY < window.innerHeight / 2) {
+      setPuzzlePosition({ x: puzzleX, y: puzzleY });
+      setHolePosition({ x: holeX, y: holeY + offset });
+    } else {
+      setPuzzlePosition({ x: puzzleX, y: puzzleY });
+      setHolePosition({ x: holeX, y: Math.max(0, holeY - offset) });
+    }
+  } else {
+    setPuzzlePosition({ x: puzzleX, y: puzzleY });
+    setHolePosition({ x: holeX, y: holeY });
+  }
+}, []);
+ 
+  // 生成不重疊的位置
+  // useEffect(() => {
+  //   // const maxX = window.innerWidth - 100;  // 減去拼圖寬度
+  //   // const maxY = window.innerHeight - 100; // 減去拼圖高度
+  //   // const randomX = Math.floor(Math.random() * maxX);
+  //   // const randomY = Math.floor(Math.random() * maxY);
+  //   // setHolePosition({ x: randomX, y: randomY });
+  //   const PUZZLE_SIZE = 100;
+  //   const SAFE_DISTANCE = 150; // 確保兩個位置之間有足夠的距離
+
+  //   // 將畫面分成左右兩半
+  //   const leftHalf = Math.floor(window.innerWidth / 2) - PUZZLE_SIZE;
+  //   const rightHalf = Math.floor(window.innerWidth / 2);
+
+  //   // 隨機決定拼圖塊在左邊還是右邊
+  //   const isPuzzleOnLeft = Math.random() > 0.5;
+
+  //   // 生成拼圖塊的位置
+  //   const puzzleX = isPuzzleOnLeft
+  //     ? Math.floor(Math.random() * (leftHalf - PUZZLE_SIZE))
+  //     : Math.floor(Math.random() * (window.innerWidth - rightHalf - PUZZLE_SIZE)) + rightHalf;
+  //   const puzzleY = Math.floor(Math.random() * (window.innerHeight - PUZZLE_SIZE));
     
-  }, []);
+  //   // 生成缺口的位置（在另一半）
+  //   const holeX = !isPuzzleOnLeft
+  //     ? Math.floor(Math.random() * (leftHalf - PUZZLE_SIZE))
+  //     : Math.floor(Math.random() * (window.innerWidth - rightHalf - PUZZLE_SIZE)) + rightHalf;
+  //   const holeY = Math.floor(Math.random() * (window.innerHeight - PUZZLE_SIZE));
+
+  //   // 確保垂直方向也有足夠距離
+  //   if (Math.abs(puzzleY - holeY) < SAFE_DISTANCE) {
+  //     const offset = SAFE_DISTANCE - Math.abs(puzzleY - holeY);
+  //     if (puzzleY < window.innerHeight / 2) {
+  //       setPuzzlePosition({ x: puzzleX, y: puzzleY });
+  //       setHolePosition({ x: holeX, y: holeY + offset });
+  //       console.log('位置生成 (上半部調整):', {
+  //         puzzle: { x: puzzleX, y: puzzleY },
+  //         hole: { x: holeX, y: holeY + offset },
+  //         isPuzzleOnLeft
+  //       });
+  //     } else {
+  //       setPuzzlePosition({ x: puzzleX, y: puzzleY });
+  //       setHolePosition({ x: holeX, y: Math.max(0, holeY - offset) });
+  //       console.log('位置生成 (下半部調整):', {
+  //         puzzle: { x: puzzleX, y: puzzleY },
+  //         hole: { x: holeX, y: Math.max(0, holeY - offset) },
+  //         isPuzzleOnLeft
+  //       });
+  //     }
+  //   } else {
+  //     setPuzzlePosition({ x: puzzleX, y: puzzleY });
+  //     setHolePosition({ x: holeX, y: holeY });
+  //     console.log('位置生成 (無需調整):', {
+  //       puzzle: { x: puzzleX, y: puzzleY },
+  //       hole: { x: holeX, y: holeY },
+  //       isPuzzleOnLeft
+  //     });
+  //   }
+    
+  // }, []);
 
   useEffect(() => {
     // 設置初始視窗大小
@@ -239,7 +338,23 @@ export default function Page() {
     setIsDragging(false);
   };
 
+
+
+  // 定義 safeZone：避開畫面左右、上下各 20%
+  const safeZone = {
+    x: window.innerWidth * 0.18,
+    y: window.innerHeight * 0.35,
+    width: window.innerWidth * 0.22,
+    height: window.innerHeight * 0.35,
+  };
+  // left: `${window.innerWidth * 0.18}px`,
+  //         top: `${window.innerHeight * 0.35}px`,
+  //         width: `${window.innerWidth * 0.22}px`,
+  //         height: `${window.innerHeight * 0.35}px`,
+  //         backgroundColor: 'rgba(255, 0, 0, 0.3)',
+
   return (
+
     <div style={{ 
       width: '100vw',
       height: '100vh',
@@ -249,6 +364,20 @@ export default function Page() {
       overflow: 'hidden',
       backgroundSize: `${windowSize.width}px ${windowSize.height}px`,
     }}>
+
+      {/* <div
+        style={{
+          position: 'absolute',
+          left: `${window.innerWidth * 0.18}px`,
+          top: `${window.innerHeight * 0.35}px`,
+          width: `${window.innerWidth * 0.22}px`,
+          height: `${window.innerHeight * 0.35}px`,
+          backgroundColor: 'rgba(255, 0, 0, 0.3)',
+          zIndex: 1000, // 確保在頂層可以看到
+        }}
+      /> */}
+
+
       {/* 底層背景 */}
       <div
         style={{
@@ -269,7 +398,7 @@ export default function Page() {
           zIndex: 2,
         }}
       >
-        {/* 完整背景圖片 */}
+
         <div
           style={{
             position: 'absolute',
@@ -284,6 +413,104 @@ export default function Page() {
           }}
         />
 
+        <div 
+          style={{
+            position: 'relative',
+            zIndex: 2, 
+            color: 'white',
+            textAlign: 'left',
+            padding: '20%',
+          }}>
+          <h2 
+            style={{
+              fontSize: '32px',
+              marginBottom: '5px',
+              fontWeight: 'bold',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
+              // 
+
+            }}
+          >
+            <div className='justify-left'>
+            最終我們
+            <br/>
+            都在
+            <br/>
+            潮間帶
+            <br/>
+            交會
+            </div>
+            
+          </h2>
+          <p 
+            style={{
+              fontSize: '32px',
+              lineHeight: '1.6',
+              textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+            }}
+          >
+            See you at the shore
+          </p>
+        </div>  
+      </div>
+      
+      {/* 漸層遮罩層 */}
+      <div
+        style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          background: `linear-gradient(to top,
+            rgba(0,0,0,0.7) 0%, 
+            rgba(0,0,0,0.3) 50%, 
+            transparent 100%)`,
+          zIndex: 6,
+          pointerEvents: 'none', // 確保遮罩不會影響互動
+        }}
+      />
+      
+      {/* 可拖曳的拼圖塊 */}
+      <div
+        // ref={nodeRef}
+        id="puzzlePiece"
+        draggable
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        style={{
+          position: 'absolute',
+          left: `${puzzlePosition.x}px`,
+          top: `${puzzlePosition.y}px`,
+        //   left: isCompleted ? `${holePosition.x}px` : `${puzzlePosition.x}px`,
+        //   top: isCompleted ? `${holePosition.y}px` : `${puzzlePosition.y}px`,
+          width: '100px',
+          height: '100px',
+          backgroundImage: `url(${ImageLoader({ src: 'puzzle-bg.png' })})`,
+          // backgroundColor: "#fff",
+
+          // backgroundColor: isDragging ? 'red' : '#fff',
+          // backgroundColor: puzzleColor, // 使用顏色狀態
+          // backgroundColor: isDragging ? draggingColor : puzzleColor, // 使用拖曳顏色
+          backgroundSize: `${backgroundSize.width}px ${backgroundSize.height}px`,
+          backgroundPosition: `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`,
+          cursor: 'grab',
+          opacity: isDragging ? '0.5' : '1',
+          boxShadow: isDragging 
+            ? '0 8px 16px rgba(0,0,0,0.2), 0 4px 8px rgba(0,0,0,0.1)' 
+            : '0 4px 8px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.1), 0 0 2px rgba(0,0,0,0.1)',
+          clipPath: PUZZLE_SHAPE_PIXELS,
+          WebkitClipPath: PUZZLE_SHAPE_PIXELS,
+        //   zIndex: 3,
+          zIndex: isCompleted ? 1 : 3,
+          // transition: 'all 0.3s ease-in-out',
+          transition: 'border 0.3s ease', // 添加邊框過渡效果
+          // border: borderStyle, // 使用邊框樣式狀態
+          outline: '4px solid white', // 使用 outline 來顯示邊框
+          outlineOffset: '-4px', // 調整邊框位置
+          // transition: 'background-color 0.3s ease', 
+        }}
+      />
+
+      <div>
         {/* 被切下來的底圖 */}
         <div
           style={{
@@ -303,62 +530,8 @@ export default function Page() {
         />
       </div>
 
-      {/* 漸層遮罩層 */}
-      <div
-        style={{
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)',
-          zIndex: 6,
-          pointerEvents: 'none', // 確保遮罩不會影響互動
-        }}
-      />
-
-      {/* 可拖曳的拼圖塊 */}
-      
-        <div
-          // ref={nodeRef}
-          id="puzzlePiece"
-          draggable
-          onDragStart={handleDragStart}
-          onDragEnd={handleDragEnd}
-          style={{
-            position: 'absolute',
-            left: `${puzzlePosition.x}px`,
-            top: `${puzzlePosition.y}px`,
-          //   left: isCompleted ? `${holePosition.x}px` : `${puzzlePosition.x}px`,
-          //   top: isCompleted ? `${holePosition.y}px` : `${puzzlePosition.y}px`,
-            width: '100px',
-            height: '100px',
-            backgroundImage: `url(${ImageLoader({ src: 'puzzle-bg.png' })})`,
-            // backgroundColor: "#fff",
-
-            // backgroundColor: isDragging ? 'red' : '#fff',
-            // backgroundColor: puzzleColor, // 使用顏色狀態
-            // backgroundColor: isDragging ? draggingColor : puzzleColor, // 使用拖曳顏色
-            backgroundSize: `${backgroundSize.width}px ${backgroundSize.height}px`,
-            backgroundPosition: `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`,
-            cursor: 'grab',
-            opacity: isDragging ? '0.5' : '1',
-            boxShadow: isDragging 
-              ? '0 8px 16px rgba(0,0,0,0.2), 0 4px 8px rgba(0,0,0,0.1)' 
-              : '0 4px 8px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.1), 0 0 2px rgba(0,0,0,0.1)',
-            clipPath: PUZZLE_SHAPE_PIXELS,
-            WebkitClipPath: PUZZLE_SHAPE_PIXELS,
-          //   zIndex: 3,
-            zIndex: isCompleted ? 1 : 3,
-            // transition: 'all 0.3s ease-in-out',
-            transition: 'border 0.3s ease', // 添加邊框過渡效果
-            // border: borderStyle, // 使用邊框樣式狀態
-            outline: '4px solid white', // 使用 outline 來顯示邊框
-            outlineOffset: '-4px', // 調整邊框位置
-            // transition: 'background-color 0.3s ease', 
-          }}
-        />
-
       {/* 被切下來的底圖 */}
-      <div
+      {/* <div
         style={{
           position: 'absolute',
           left: `${holePosition.x}px`,
@@ -377,7 +550,7 @@ export default function Page() {
           opacity: isCompleted ? 1 : 0,  // 完成時顯示
           transition: 'opacity 0.3s ease-in-out',
         }}
-      />
+      /> */}
 
       {/* 放置區域 */}
       <div

@@ -332,6 +332,7 @@ useEffect(() => {
         }, 1200);  // 2秒後跳轉
     }
   };
+  
 
   // 拖曳結束
   const handleDragEnd = () => {

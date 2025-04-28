@@ -304,10 +304,23 @@ useEffect(() => {
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     e.preventDefault();
     const touch = e.touches[0];
-    setPuzzlePosition({
+    const newPos = {
       x: touch.clientX - pointerOffset.x,
       y: touch.clientY - pointerOffset.y,
-    });
+    };
+    setPuzzlePosition(newPos);
+  
+    // 評估拼圖塊是否進入放置區 (這裡以寬高 100px 為例)
+    if (
+      newPos.x + 40 > holePosition.x &&
+      newPos.x < holePosition.x + 40 &&
+      newPos.y + 40 > holePosition.y &&
+      newPos.y < holePosition.y + 40
+    ) {
+      setIsOverDropZone(true);
+    } else {
+      setIsOverDropZone(false);
+    }
   };
   
 
@@ -317,7 +330,7 @@ useEffect(() => {
       puzzlePosition.x + 10 > holePosition.x &&
       puzzlePosition.x < holePosition.x + 10 &&
       puzzlePosition.y + 10 > holePosition.y &&
-      puzzlePosition.y < holePosition.y + 100
+      puzzlePosition.y < holePosition.y + 10
     );
   };
 

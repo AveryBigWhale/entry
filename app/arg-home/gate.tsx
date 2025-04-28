@@ -273,29 +273,29 @@ useEffect(() => {
   }, [windowSize]);
 
   // 處理觸控開始，紀錄起始位置
-  const [touchOffset, setTouchOffset] = useState({ x: 0, y: 0 });
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    const touch = e.touches[0];
-    // 紀錄初始偏移
-    setTouchOffset({
-      x: touch.clientX - puzzlePosition.x,
-      y: touch.clientY - puzzlePosition.y,
-    });
-  };
-  // 處理觸控移動，更新拼圖塊位置
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    const touch = e.touches[0];
-    setPuzzlePosition({
-      x: touch.clientX - touchOffset.x,
-      y: touch.clientY - touchOffset.y,
-    });
-  };
-  // 觸控結束
-  const handleTouchEnd = () => {
-    // 可根據需求執行拖曳結束後的邏輯
-    setIsDragging(false);
-  };
+  // const [touchOffset, setTouchOffset] = useState({ x: 0, y: 0 });
+  // const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+  //   const touch = e.touches[0];
+  //   // 紀錄初始偏移
+  //   setTouchOffset({
+  //     x: touch.clientX - puzzlePosition.x,
+  //     y: touch.clientY - puzzlePosition.y,
+  //   });
+  // };
+  // // 處理觸控移動，更新拼圖塊位置
+  // const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+  //   e.preventDefault();
+  //   const touch = e.touches[0];
+  //   setPuzzlePosition({
+  //     x: touch.clientX - touchOffset.x,
+  //     y: touch.clientY - touchOffset.y,
+  //   });
+  // };
+  // // 觸控結束
+  // const handleTouchEnd = () => {
+  //   // 可根據需求執行拖曳結束後的邏輯
+  //   setIsDragging(false);
+  // };
 
   // 狀態與偏移同上
   const [pointerOffset, setPointerOffset] = useState({ x: 0, y: 0 });
@@ -310,7 +310,6 @@ useEffect(() => {
   };
   // Pointer move 時更新位置
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    e.preventDefault(); // 防止預設滾動/縮放行為
     // 檢查是否已經 capture pointerId
     if (e.pressure === 0) return;
     setPuzzlePosition({
@@ -324,47 +323,46 @@ useEffect(() => {
     setIsDragging(false);
   };
 
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    e.dataTransfer.setData('text', e.currentTarget.id);
+  // const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+  //   e.dataTransfer.setData('text', e.currentTarget.id);
 
-    // Create a custom drag image
-    const dragImage = document.createElement('div');
-    dragImage.style.width = '100px';
-    dragImage.style.height = '100px';
-    // dragImage.style.backgroundColor  = '#fff'; // Change to desired color
-    dragImage.style.backgroundImage = `url(${ImageLoader({ src: 'puzzle-bg-5.png' })})`;
+  //   // Create a custom drag image
+  //   const dragImage = document.createElement('div');
+  //   dragImage.style.width = '100px';
+  //   dragImage.style.height = '100px';
+  //   // dragImage.style.backgroundColor  = '#fff'; // Change to desired color
+  //   dragImage.style.backgroundImage = `url(${ImageLoader({ src: 'puzzle-bg-5.png' })})`;
 
-    dragImage.style.backgroundSize = `${backgroundSize.width}px ${backgroundSize.height}px`;
-    dragImage.style.backgroundPosition = `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`;
+  //   dragImage.style.backgroundSize = `${backgroundSize.width}px ${backgroundSize.height}px`;
+  //   dragImage.style.backgroundPosition = `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`;
             
-    dragImage.style.opacity = '1'; // Optional: make it slightly transparent
-    dragImage.style.position = 'absolute';
-    dragImage.style.pointerEvents = 'none'; // Prevent interaction with the drag image
-    dragImage.style.clipPath = PUZZLE_SHAPE_PIXELS;
-    // dragImage.style.WebkitClipPath = PUZZLE_SHAPE_PIXELS,
-    // Append to body to make it visible
-    document.body.appendChild(dragImage);
+  //   dragImage.style.opacity = '1'; // Optional: make it slightly transparent
+  //   dragImage.style.position = 'absolute';
+  //   dragImage.style.pointerEvents = 'none'; // Prevent interaction with the drag image
+  //   dragImage.style.clipPath = PUZZLE_SHAPE_PIXELS;
+  //   // dragImage.style.WebkitClipPath = PUZZLE_SHAPE_PIXELS,
+  //   // Append to body to make it visible
+  //   document.body.appendChild(dragImage);
 
-    // Set the custom drag image
-    e.dataTransfer.setDragImage(dragImage, 50, 50); // Offset to center the image
+  //   // Set the custom drag image
+  //   e.dataTransfer.setDragImage(dragImage, 50, 50); // Offset to center the image
 
     
-    // Remove the custom drag image after a short delay
-    setTimeout(() => {
-      document.body.removeChild(dragImage);
-    }, 0);
-    setIsDragging(true);
-    // setBorderStyle(BORDER_STYLE); // 拖曳時設置白色邊框
-  };
+  //   // Remove the custom drag image after a short delay
+  //   setTimeout(() => {
+  //     document.body.removeChild(dragImage);
+  //   }, 0);
+  //   setIsDragging(true);
+  //   // setBorderStyle(BORDER_STYLE); // 拖曳時設置白色邊框
+  // };
 
-
-  // 拖曳進入區域時顯示放置提示
+  // // 拖曳進入區域時顯示放置提示
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsOverDropZone(true);
   };
 
-  // 拖曳離開區域時，隱藏提示
+  // // 拖曳離開區域時，隱藏提示
   const handleDragLeave = () => {
     setIsOverDropZone(false);
   };
@@ -384,11 +382,10 @@ useEffect(() => {
     }
   };
 
-
-  // 拖曳結束
-  const handleDragEnd = () => {
-    setIsDragging(false);
-  };
+  // // 拖曳結束
+  // const handleDragEnd = () => {
+  //   setIsDragging(false);
+  // };
 
   // left: `${window.innerWidth * 0.18}px`,
   //         top: `${window.innerHeight * 0.35}px`,
@@ -551,7 +548,6 @@ useEffect(() => {
       <div
         // ref={nodeRef}
         id="puzzlePiece"
-        
         draggable
         // onDragStart={handleDragStart}
         // onDragEnd={handleDragEnd}
@@ -562,7 +558,6 @@ useEffect(() => {
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         style={{
-          touchAction: 'none',  // 禁止瀏覽器預設觸控操作
           position: 'absolute',
           left: `${puzzlePosition.x}px`,
           top: `${puzzlePosition.y}px`,

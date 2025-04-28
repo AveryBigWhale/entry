@@ -293,26 +293,47 @@ useEffect(() => {
     }
   };  
 
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    const touch = e.touches[0];
-    setPointerOffset({
-      x: touch.clientX - puzzlePosition.x,
-      y: touch.clientY - puzzlePosition.y,
-    });
-  };
+  // const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+  //   const touch = e.touches[0];
+  //   setPointerOffset({
+  //     x: touch.clientX - puzzlePosition.x,
+  //     y: touch.clientY - puzzlePosition.y,
+  //   });
+  // };
   
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    const touch = e.touches[0];
-    setPuzzlePosition({
-      x: touch.clientX - pointerOffset.x,
-      y: touch.clientY - pointerOffset.y,
-    });
-  };
+  // const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+  //   e.preventDefault();
+  //   const touch = e.touches[0];
+  //   setPuzzlePosition({
+  //     x: touch.clientX - pointerOffset.x,
+  //     y: touch.clientY - pointerOffset.y,
+  //   });
+  // };
   
-  const handleTouchEnd = () => {
-    setIsDragging(false);
+
+  // 假設拼圖和缺口寬高均為100px
+  const isInDropZone = (): boolean => {
+    return (
+      puzzlePosition.x + 100 > holePosition.x &&
+      puzzlePosition.x < holePosition.x + 100 &&
+      puzzlePosition.y + 100 > holePosition.y &&
+      puzzlePosition.y < holePosition.y + 100
+    );
   };
+
+  // const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+  //   setIsDragging(false);
+  //   if (isInDropZone()) {
+  //     setIsCompleted(true); // 與 drop 一樣的完成邏輯
+  //     setTimeout(() => {
+  //       router.replace('./arg-home/uncover');
+  //     }, 1200);
+  //   }
+  // };
+
+  // const handleTouchEnd = () => {
+  //   setIsDragging(false);
+  // };
 
   // 狀態與偏移同上
   const [pointerOffset, setPointerOffset] = useState({ x: 0, y: 0 });
@@ -338,11 +359,23 @@ useEffect(() => {
     });
   };
 
-  // Pointer up（拖曳結束）
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     e.currentTarget.releasePointerCapture(e.pointerId);
     setIsDragging(false);
+    // 檢查是否在放置區域內
+    if (isInDropZone()) {
+      setIsCompleted(true);
+      setTimeout(() => {
+        router.replace('./arg-home/uncover');
+      }, 1200);
+    }
   };
+  // Pointer up（拖曳結束）
+  // const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+  //   e.currentTarget.releasePointerCapture(e.pointerId);
+  //   setIsDragging(false);
+  // };
+
   
   return (
 
@@ -404,45 +437,6 @@ useEffect(() => {
           }}
         />
 
-        {/* <div 
-          style={{
-            position: 'relative',
-            zIndex: 2, 
-            color: 'white',
-            textAlign: 'left',
-            padding: '20%',
-          }}>
-          <h2 
-            style={{
-              fontSize: '32px',
-              marginBottom: '5px',
-              fontWeight: 'bold',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-              // 
-
-            }}
-          >
-            <div className='justify-left'>
-            最終我們
-            <br/>
-            都在
-            <br/>
-            潮間帶
-            <br/>
-            交會
-            </div>
-            
-          </h2>
-          <p 
-            style={{
-              fontSize: '32px',
-              lineHeight: '1.6',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-            }}
-          >
-            See you at the shore
-          </p>
-        </div>   */}
         <div 
           style={{
             position: 'relative',
@@ -505,9 +499,9 @@ useEffect(() => {
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
-        onTouchStart={handleTouchStart}   // 備援的 touch 事件
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
+        // onTouchStart={handleTouchStart}   // 備援的 touch 事件
+        // onTouchMove={handleTouchMove}
+        // onTouchEnd={handleTouchEnd}
         style={{
           touchAction: 'none', // 禁止預設觸控行為
           position: 'absolute',

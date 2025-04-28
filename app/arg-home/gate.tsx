@@ -314,9 +314,9 @@ useEffect(() => {
   // 假設拼圖和缺口寬高均為100px
   const isInDropZone = (): boolean => {
     return (
-      puzzlePosition.x + 100 > holePosition.x &&
-      puzzlePosition.x < holePosition.x + 100 &&
-      puzzlePosition.y + 100 > holePosition.y &&
+      puzzlePosition.x + 10 > holePosition.x &&
+      puzzlePosition.x < holePosition.x + 10 &&
+      puzzlePosition.y + 10 > holePosition.y &&
       puzzlePosition.y < holePosition.y + 100
     );
   };

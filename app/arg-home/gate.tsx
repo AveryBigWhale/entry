@@ -480,7 +480,7 @@ useEffect(() => {
       <div
         // ref={nodeRef}
         id="puzzlePiece"
-        draggable
+        // draggable
         // onDragStart={handleDragStart}
         // onDragEnd={handleDragEnd}
         onPointerDown={handlePointerDown}

@@ -487,6 +487,7 @@ useEffect(() => {
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         style={{
+          touchAction: 'none', // 禁止預設觸控行為
           position: 'absolute',
           left: `${puzzlePosition.x}px`,
           top: `${puzzlePosition.y}px`,

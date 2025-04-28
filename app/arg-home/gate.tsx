@@ -532,7 +532,7 @@ useEffect(() => {
           clipPath: PUZZLE_SHAPE_PIXELS,
           WebkitClipPath: PUZZLE_SHAPE_PIXELS,
         //   zIndex: 3,
-          zIndex: isCompleted ? 1 : 3,
+          zIndex: isCompleted ? 10 : 30,
           // transition: 'all 0.3s ease-in-out',
           transition: 'border 0.3s ease', // 添加邊框過渡效果
           // border: borderStyle, // 使用邊框樣式狀態

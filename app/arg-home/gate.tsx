@@ -272,56 +272,7 @@ useEffect(() => {
     };
   }, [windowSize]);
 
-  // 處理觸控開始，紀錄起始位置
-  // const [touchOffset, setTouchOffset] = useState({ x: 0, y: 0 });
-  // const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-  //   const touch = e.touches[0];
-  //   // 紀錄初始偏移
-  //   setTouchOffset({
-  //     x: touch.clientX - puzzlePosition.x,
-  //     y: touch.clientY - puzzlePosition.y,
-  //   });
-  // };
-  // // 處理觸控移動，更新拼圖塊位置
-  // const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-  //   e.preventDefault();
-  //   const touch = e.touches[0];
-  //   setPuzzlePosition({
-  //     x: touch.clientX - touchOffset.x,
-  //     y: touch.clientY - touchOffset.y,
-  //   });
-  // };
-  // // 觸控結束
-  // const handleTouchEnd = () => {
-  //   // 可根據需求執行拖曳結束後的邏輯
-  //   setIsDragging(false);
-  // };
-
-  // 狀態與偏移同上
-  const [pointerOffset, setPointerOffset] = useState({ x: 0, y: 0 });
-  // Pointer down 時
-  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    // 把事件 target 綁定為 pointer capture，未來 pointer move 都會發送到這個元素
-    e.currentTarget.setPointerCapture(e.pointerId);
-    setPointerOffset({
-      x: e.clientX - puzzlePosition.x,
-      y: e.clientY - puzzlePosition.y,
-    });
-  };
-  // Pointer move 時更新位置
-  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    // 檢查是否已經 capture pointerId
-    if (e.pressure === 0) return;
-    setPuzzlePosition({
-      x: e.clientX - pointerOffset.x,
-      y: e.clientY - pointerOffset.y,
-    });
-  };
-  // Pointer up（拖曳結束）
-  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-    e.currentTarget.releasePointerCapture(e.pointerId);
-    setIsDragging(false);
-  };
+  
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     e.dataTransfer.setData('text', e.currentTarget.id);
@@ -553,12 +504,9 @@ useEffect(() => {
         draggable
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
-        // onTouchStart={handleTouchStart}
-        // onTouchMove={handleTouchMove}
-        // onTouchEnd={handleTouchEnd}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         style={{
           position: 'absolute',
           left: `${puzzlePosition.x}px`,

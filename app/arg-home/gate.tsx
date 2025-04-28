@@ -22,6 +22,7 @@ export default function Page() {
   const [backgroundSize, setBackgroundSize] = useState({ width: 0, height: 0 });
   const [backgroundPosition, setBackgroundPosition] = useState({ x: 0, y: 0 });
 
+  const [touchOffset, setTouchOffset] = useState({ x: 0, y: 0 });
   // const [borderStyle, setBorderStyle] = useState('none'); // 新增狀態來管理邊框樣式
   // const [borderStyle, setBorderStyle] = useState('2px solid white'); // 初始邊框樣式
 
@@ -272,6 +273,31 @@ useEffect(() => {
     };
   }, [windowSize]);
 
+  // 處理觸控開始，紀錄起始位置
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.touches[0];
+    // 紀錄初始偏移
+    setTouchOffset({
+      x: touch.clientX - puzzlePosition.x,
+      y: touch.clientY - puzzlePosition.y,
+    });
+  };
+
+  // 處理觸控移動，更新拼圖塊位置
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    setPuzzlePosition({
+      x: touch.clientX - touchOffset.x,
+      y: touch.clientY - touchOffset.y,
+    });
+  };
+
+  // 觸控結束
+  const handleTouchEnd = () => {
+    // 可根據需求執行拖曳結束後的邏輯
+    setIsDragging(false);
+  };
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     e.dataTransfer.setData('text', e.currentTarget.id);
@@ -405,7 +431,7 @@ useEffect(() => {
           }}
         />
 
-        <div 
+        {/* <div 
           style={{
             position: 'relative',
             zIndex: 2, 
@@ -443,6 +469,41 @@ useEffect(() => {
           >
             See you at the shore
           </p>
+        </div>   */}
+        <div 
+          style={{
+            position: 'relative',
+            zIndex: 2, 
+            color: 'white',
+            textAlign: 'left',
+            padding: '20%',
+          }}>
+          <h2 
+            style={{
+              fontSize: '32px',
+              marginBottom: '5px',
+              fontWeight: 'bold',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
+              // 
+
+            }}
+          >
+            <div className='justify-left'>
+            鯨魚擱淺海灘
+            <br/>
+            
+            </div>
+            
+          </h2>
+          <p 
+            style={{
+              fontSize: '32px',
+              lineHeight: '1.6',
+              textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+            }}
+          >
+            See you at the shore
+          </p>
         </div>  
       </div>
       
@@ -453,8 +514,8 @@ useEffect(() => {
           width: '100%',
           height: '100%',
           background: `linear-gradient(to top,
-            rgba(0,0,0,0.7) 0%, 
-            rgba(0,0,0,0.3) 50%, 
+
+
             transparent 100%)`,
           zIndex: 6,
           pointerEvents: 'none', // 確保遮罩不會影響互動
@@ -468,6 +529,9 @@ useEffect(() => {
         draggable
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         style={{
           position: 'absolute',
           left: `${puzzlePosition.x}px`,
@@ -478,7 +542,6 @@ useEffect(() => {
           height: '100px',
           backgroundImage: `url(${ImageLoader({ src: 'puzzle-bg-5.png' })})`,
           // backgroundColor: "#fff",
-
           // backgroundColor: isDragging ? 'red' : '#fff',
           // backgroundColor: puzzleColor, // 使用顏色狀態
           // backgroundColor: isDragging ? draggingColor : puzzleColor, // 使用拖曳顏色

@@ -551,6 +551,7 @@ useEffect(() => {
       <div
         // ref={nodeRef}
         id="puzzlePiece"
+        
         draggable
         // onDragStart={handleDragStart}
         // onDragEnd={handleDragEnd}
@@ -561,6 +562,7 @@ useEffect(() => {
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         style={{
+          touchAction: 'none',  // 禁止瀏覽器預設觸控操作
           position: 'absolute',
           left: `${puzzlePosition.x}px`,
           top: `${puzzlePosition.y}px`,

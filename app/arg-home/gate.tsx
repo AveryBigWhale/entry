@@ -340,12 +340,35 @@ useEffect(() => {
     setIsDragging(false);
   };
 
-  // left: `${window.innerWidth * 0.18}px`,
-  //         top: `${window.innerHeight * 0.35}px`,
-  //         width: `${window.innerWidth * 0.22}px`,
-  //         height: `${window.innerHeight * 0.35}px`,
-  //         backgroundColor: 'rgba(255, 0, 0, 0.3)',
+  // 狀態與偏移同上
+  const [pointerOffset, setPointerOffset] = useState({ x: 0, y: 0 });
 
+  // Pointer down 時
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    // 把事件 target 綁定為 pointer capture，未來 pointer move 都會發送到這個元素
+    e.currentTarget.setPointerCapture(e.pointerId);
+    setPointerOffset({
+      x: e.clientX - puzzlePosition.x,
+      y: e.clientY - puzzlePosition.y,
+    });
+  };
+
+  // Pointer move 時更新位置
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    // 檢查是否已經 capture pointerId
+    if (e.pressure === 0) return;
+    setPuzzlePosition({
+      x: e.clientX - pointerOffset.x,
+      y: e.clientY - pointerOffset.y,
+    });
+  };
+
+  // Pointer up（拖曳結束）
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.currentTarget.releasePointerCapture(e.pointerId);
+    setIsDragging(false);
+  };
+  
   return (
 
     <div style={{ 
@@ -504,9 +527,9 @@ useEffect(() => {
         draggable
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
         style={{
           position: 'absolute',
           left: `${puzzlePosition.x}px`,

@@ -310,6 +310,7 @@ useEffect(() => {
   };
   // Pointer move 時更新位置
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.preventDefault(); // 防止預設滾動/縮放行為
     // 檢查是否已經 capture pointerId
     if (e.pressure === 0) return;
     setPuzzlePosition({

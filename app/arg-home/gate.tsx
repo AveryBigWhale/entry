@@ -291,10 +291,28 @@ useEffect(() => {
             router.replace('./arg-home/uncover');  // 使用 replace 來確保不保留當前狀態
         }, 1200);  // 2秒後跳轉
     }
+  };  
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.touches[0];
+    setPointerOffset({
+      x: touch.clientX - puzzlePosition.x,
+      y: touch.clientY - puzzlePosition.y,
+    });
   };
-
-
   
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    setPuzzlePosition({
+      x: touch.clientX - pointerOffset.x,
+      y: touch.clientY - pointerOffset.y,
+    });
+  };
+  
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+  };
 
   // 狀態與偏移同上
   const [pointerOffset, setPointerOffset] = useState({ x: 0, y: 0 });
@@ -487,6 +505,9 @@ useEffect(() => {
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
+        onTouchStart={handleTouchStart}   // 備援的 touch 事件
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         style={{
           touchAction: 'none', // 禁止預設觸控行為
           position: 'absolute',

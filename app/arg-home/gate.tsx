@@ -293,22 +293,22 @@ useEffect(() => {
     }
   };  
 
-  // const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-  //   const touch = e.touches[0];
-  //   setPointerOffset({
-  //     x: touch.clientX - puzzlePosition.x,
-  //     y: touch.clientY - puzzlePosition.y,
-  //   });
-  // };
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.touches[0];
+    setPointerOffset({
+      x: touch.clientX - puzzlePosition.x,
+      y: touch.clientY - puzzlePosition.y,
+    });
+  };
   
-  // const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-  //   e.preventDefault();
-  //   const touch = e.touches[0];
-  //   setPuzzlePosition({
-  //     x: touch.clientX - pointerOffset.x,
-  //     y: touch.clientY - pointerOffset.y,
-  //   });
-  // };
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    setPuzzlePosition({
+      x: touch.clientX - pointerOffset.x,
+      y: touch.clientY - pointerOffset.y,
+    });
+  };
   
 
   // 假設拼圖和缺口寬高均為100px
@@ -321,15 +321,15 @@ useEffect(() => {
     );
   };
 
-  // const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
-  //   setIsDragging(false);
-  //   if (isInDropZone()) {
-  //     setIsCompleted(true); // 與 drop 一樣的完成邏輯
-  //     setTimeout(() => {
-  //       router.replace('./arg-home/uncover');
-  //     }, 1200);
-  //   }
-  // };
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    if (isInDropZone()) {
+      setIsCompleted(true); // 與 drop 一樣的完成邏輯
+      setTimeout(() => {
+        router.replace('./arg-home/uncover');
+      }, 1200);
+    }
+  };
 
   // const handleTouchEnd = () => {
   //   setIsDragging(false);
@@ -339,37 +339,38 @@ useEffect(() => {
   const [pointerOffset, setPointerOffset] = useState({ x: 0, y: 0 });
 
   // Pointer down 時
-  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    // 把事件 target 綁定為 pointer capture，未來 pointer move 都會發送到這個元素
-    e.currentTarget.setPointerCapture(e.pointerId);
-    setPointerOffset({
-      x: e.clientX - puzzlePosition.x,
-      y: e.clientY - puzzlePosition.y,
-    });
-  };
+  // const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+  //   // 把事件 target 綁定為 pointer capture，未來 pointer move 都會發送到這個元素
+  //   e.currentTarget.setPointerCapture(e.pointerId);
+  //   setPointerOffset({
+  //     x: e.clientX - puzzlePosition.x,
+  //     y: e.clientY - puzzlePosition.y,
+  //   });
+  // };
 
-  // Pointer move 時更新位置
-  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    // 檢查是否已經 capture pointerId
-    e.preventDefault(); // 防止預設行為，如頁面滾動
-    if (e.pressure === 0) return;
-    setPuzzlePosition({
-      x: e.clientX - pointerOffset.x,
-      y: e.clientY - pointerOffset.y,
-    });
-  };
+  // // Pointer move 時更新位置
+  // const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+  //   // 檢查是否已經 capture pointerId
+  //   e.preventDefault(); // 防止預設行為，如頁面滾動
+  //   if (e.pressure === 0) return;
+  //   setPuzzlePosition({
+  //     x: e.clientX - pointerOffset.x,
+  //     y: e.clientY - pointerOffset.y,
+  //   });
+  // };
 
-  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-    e.currentTarget.releasePointerCapture(e.pointerId);
-    setIsDragging(false);
-    // 檢查是否在放置區域內
-    if (isInDropZone()) {
-      setIsCompleted(true);
-      setTimeout(() => {
-        router.replace('./arg-home/uncover');
-      }, 1200);
-    }
-  };
+  // const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+  //   e.currentTarget.releasePointerCapture(e.pointerId);
+  //   setIsDragging(false);
+  //   // 檢查是否在放置區域內
+  //   if (isInDropZone()) {
+  //     setIsCompleted(true);
+  //     setTimeout(() => {
+  //       router.replace('./arg-home/uncover');
+  //     }, 1200);
+  //   }
+  // };
+
   // Pointer up（拖曳結束）
   // const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
   //   e.currentTarget.releasePointerCapture(e.pointerId);
@@ -496,12 +497,12 @@ useEffect(() => {
         // draggable
         // onDragStart={handleDragStart}
         // onDragEnd={handleDragEnd}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        // onTouchStart={handleTouchStart}   // 備援的 touch 事件
-        // onTouchMove={handleTouchMove}
-        // onTouchEnd={handleTouchEnd}
+        // onPointerDown={handlePointerDown}
+        // onPointerMove={handlePointerMove}
+        // onPointerUp={handlePointerUp}
+        onTouchStart={handleTouchStart}   // 備援的 touch 事件
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         style={{
           touchAction: 'none', // 禁止預設觸控行為
           position: 'absolute',

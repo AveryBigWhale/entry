@@ -22,7 +22,6 @@ export default function Page() {
   const [backgroundSize, setBackgroundSize] = useState({ width: 0, height: 0 });
   const [backgroundPosition, setBackgroundPosition] = useState({ x: 0, y: 0 });
 
-  const [touchOffset, setTouchOffset] = useState({ x: 0, y: 0 });
   // const [borderStyle, setBorderStyle] = useState('none'); // 新增狀態來管理邊框樣式
   // const [borderStyle, setBorderStyle] = useState('2px solid white'); // 初始邊框樣式
 
@@ -274,6 +273,7 @@ useEffect(() => {
   }, [windowSize]);
 
   // 處理觸控開始，紀錄起始位置
+  const [touchOffset, setTouchOffset] = useState({ x: 0, y: 0 });
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     const touch = e.touches[0];
     // 紀錄初始偏移
@@ -282,7 +282,6 @@ useEffect(() => {
       y: touch.clientY - puzzlePosition.y,
     });
   };
-
   // 處理觸控移動，更新拼圖塊位置
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -292,10 +291,35 @@ useEffect(() => {
       y: touch.clientY - touchOffset.y,
     });
   };
-
   // 觸控結束
   const handleTouchEnd = () => {
     // 可根據需求執行拖曳結束後的邏輯
+    setIsDragging(false);
+  };
+
+  // 狀態與偏移同上
+  const [pointerOffset, setPointerOffset] = useState({ x: 0, y: 0 });
+  // Pointer down 時
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    // 把事件 target 綁定為 pointer capture，未來 pointer move 都會發送到這個元素
+    e.currentTarget.setPointerCapture(e.pointerId);
+    setPointerOffset({
+      x: e.clientX - puzzlePosition.x,
+      y: e.clientY - puzzlePosition.y,
+    });
+  };
+  // Pointer move 時更新位置
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    // 檢查是否已經 capture pointerId
+    if (e.pressure === 0) return;
+    setPuzzlePosition({
+      x: e.clientX - pointerOffset.x,
+      y: e.clientY - pointerOffset.y,
+    });
+  };
+  // Pointer up（拖曳結束）
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.currentTarget.releasePointerCapture(e.pointerId);
     setIsDragging(false);
   };
 
@@ -527,11 +551,14 @@ useEffect(() => {
         // ref={nodeRef}
         id="puzzlePiece"
         draggable
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
+        // onDragStart={handleDragStart}
+        // onDragEnd={handleDragEnd}
+        // onTouchStart={handleTouchStart}
+        // onTouchMove={handleTouchMove}
+        // onTouchEnd={handleTouchEnd}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
         style={{
           position: 'absolute',
           left: `${puzzlePosition.x}px`,

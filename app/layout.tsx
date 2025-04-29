@@ -2,9 +2,13 @@
 // import { GoogleAnalytics } from '@next/third-parties/google'
 import Script from 'next/script';
  
+// app/layout.tsx 或 page.tsx
+import { cn } from "@/lib/utils";
+import { fontCarat } from "@/assets/fonts";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" >
       <head>
         <Script
           async
@@ -25,10 +29,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
-          gtag('config', 'G-FZCK9PB2KG');
+          gtag('config ', 'G-FZCK9PB2KG');
         </script> */}
       </head>
-      <body style={{ margin: 0, padding: 0 }}>
+      <body className={cn("antialiased", fontCarat.variable)} style={{ margin: 0, padding: 0 }}>
         {children}
       </body>
     </html>

@@ -1,5 +1,7 @@
 import type {Config} from "tailwindcss";
 
+import {fontFamily} from "tailwindcss/defaultTheme";
+
 const config: Config = {
     darkMode: ["class"],
     content: [
@@ -69,7 +71,10 @@ const config: Config = {
     		fontFamily: {
     			'work-sans': [
     				'var(--font-work-sans)'
-    			]
+    			],
+				// carat: ['var(--font-carat)', ...fontFamily.sans],
+				carat: ['Carat', 'sans-serif'],
+				// 'carat': ['var(--font-carat)'],
     		},
     		borderRadius: {
     			lg: 'var(--radius)',

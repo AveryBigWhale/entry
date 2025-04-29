@@ -10,13 +10,28 @@ import ImageLoader from '../../components/ImageLoader'; // Adjust the path as ne
 // import Draggable from 'react-draggable';
 // import puzzleBg from '../../public/puzzle-bg-5.png'; // Adjust the path as necessary
 
+// import { Stick } from "next/font/google"
+// import { Potta_One } from "next/font/google"
+import { Kaisei_Opti } from "next/font/google"
+// import { Yuji_Syuku } from "next/font/google"
+// import { Zen_Antique } from "next/font/google"
+// import { Reggae_One } from "next/font/google"
+// import { Zen_Antique_Soft } from "next/font/google"
+// import { Yusei_Magic } from "next/font/google"
+// import { Yusei_Magic } from "next/font/google"
+// import { Dela_Gothic_One } from "next/font/google"
+
+const bokorFont = Kaisei_Opti({
+  subsets: ['latin'],
+  weight: "700",
+})
 
 export default function Page() {
   const router = useRouter();
   const [isOverDropZone, setIsOverDropZone] = useState(false);
   const [holePosition, setHolePosition] = useState({ x: 300, y: 200 });
   const [puzzlePosition, setPuzzlePosition] = useState({ x: 50, y: 100 });
-  const [isDragging, setIsDragging] = useState(false);
+  // const [isDragging, setIsDragging] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);  // 新增：追踪拼圖是否完成
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
   const [backgroundSize, setBackgroundSize] = useState({ width: 0, height: 0 });
@@ -26,40 +41,40 @@ export default function Page() {
   // const [borderStyle, setBorderStyle] = useState('2px solid white'); // 初始邊框樣式
 
   // 定義拼圖形狀
-  const PUZZLE_SHAPE_PIXELS = `polygon(
-    20px 0px, 
-    30px 0px, 
-    30px 10px, 
-    40px 10px,
-    50px 10px, 
-    60px 10px, 
-    70px 0px, 
-    80px 0px, 
-    100px 0px, 
-    100px 20px, 
-    90px 30px,
-    90px 40px, 
-    90px 50px, 
-    90px 60px,
-    100px 70px, 
-    100px 80px, 
-    100px 100px, 
-    80px 100px, 
-    70px 90px, 
-    60px 90px, 
-    50px 90px, 
-    40px 90px, 
-    30px 100px, 
-    20px 100px, 
-    0px 100px, 
-    0px 80px, 
-    10px 70px, 
-    10px 60px, 
-    10px 50px, 
-    10px 40px, 
-    0px 30px, 
-    0px 20px
-  )`;
+  // const PUZZLE_SHAPE_PIXELS = `polygon(
+  //   20px 0px, 
+  //   30px 0px, 
+  //   30px 10px, 
+  //   40px 10px,
+  //   50px 10px, 
+  //   60px 10px, 
+  //   70px 0px, 
+  //   80px 0px, 
+  //   100px 0px, 
+  //   100px 20px, 
+  //   90px 30px,
+  //   90px 40px, 
+  //   90px 50px, 
+  //   90px 60px,
+  //   100px 70px, 
+  //   100px 80px, 
+  //   100px 100px, 
+  //   80px 100px, 
+  //   70px 90px, 
+  //   60px 90px, 
+  //   50px 90px, 
+  //   40px 90px, 
+  //   30px 100px, 
+  //   20px 100px, 
+  //   0px 100px, 
+  //   0px 80px, 
+  //   10px 70px, 
+  //   10px 60px, 
+  //   10px 50px, 
+  //   10px 40px, 
+  //   0px 30px, 
+  //   0px 20px
+  // )`;
 
 
   const isInSafeZone = React.useCallback((x: number, y: number, size: number): boolean => {
@@ -335,7 +350,7 @@ useEffect(() => {
   };
 
   const handleTouchEnd = () => {
-    setIsDragging(false);
+    // setIsDragging(false);
     if (isInDropZone()) {
       setIsCompleted(true); // 與 drop 一樣的完成邏輯
       setTimeout(() => {
@@ -352,37 +367,37 @@ useEffect(() => {
   const [pointerOffset, setPointerOffset] = useState({ x: 0, y: 0 });
 
   // Pointer down 時
-  // const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-  //   // 把事件 target 綁定為 pointer capture，未來 pointer move 都會發送到這個元素
-  //   e.currentTarget.setPointerCapture(e.pointerId);
-  //   setPointerOffset({
-  //     x: e.clientX - puzzlePosition.x,
-  //     y: e.clientY - puzzlePosition.y,
-  //   });
-  // };
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    // 把事件 target 綁定為 pointer capture，未來 pointer move 都會發送到這個元素
+    e.currentTarget.setPointerCapture(e.pointerId);
+    setPointerOffset({
+      x: e.clientX - puzzlePosition.x,
+      y: e.clientY - puzzlePosition.y,
+    });
+  };
 
-  // // Pointer move 時更新位置
-  // const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-  //   // 檢查是否已經 capture pointerId
-  //   e.preventDefault(); // 防止預設行為，如頁面滾動
-  //   if (e.pressure === 0) return;
-  //   setPuzzlePosition({
-  //     x: e.clientX - pointerOffset.x,
-  //     y: e.clientY - pointerOffset.y,
-  //   });
-  // };
+  // Pointer move 時更新位置
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    // 檢查是否已經 capture pointerId
+    e.preventDefault(); // 防止預設行為，如頁面滾動
+    if (e.pressure === 0) return;
+    setPuzzlePosition({
+      x: e.clientX - pointerOffset.x,
+      y: e.clientY - pointerOffset.y,
+    });
+  };
 
-  // const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-  //   e.currentTarget.releasePointerCapture(e.pointerId);
-  //   setIsDragging(false);
-  //   // 檢查是否在放置區域內
-  //   if (isInDropZone()) {
-  //     setIsCompleted(true);
-  //     setTimeout(() => {
-  //       router.replace('./arg-home/uncover');
-  //     }, 1200);
-  //   }
-  // };
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.currentTarget.releasePointerCapture(e.pointerId);
+    // setIsDragging(false);
+    // 檢查是否在放置區域內
+    if (isInDropZone()) {
+      setIsCompleted(true);
+      setTimeout(() => {
+        router.replace('./arg-home/uncover');
+      }, 1200);
+    }
+  };
 
   // Pointer up（拖曳結束）
   // const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -451,13 +466,41 @@ useEffect(() => {
           }}
         />
 
-        <div 
+        {/* <div className="font-carat"
           style={{
             position: 'relative',
             zIndex: 2, 
             color: 'white',
             textAlign: 'left',
             padding: '20%',
+            // fontFamily: 'Carat, sans-serif',
+          }}>
+          我是 Carat 字體！
+
+        </div> */}
+        {/* <div className={` ${bokorFont.className}`}
+          style={{
+            position: 'relative',
+            zIndex: 2, 
+            color: 'white',
+            textAlign: 'left',
+            padding: '20%',
+            // fontFamily: 'Carat, sans-serif',
+          }}>
+          Test for Eng font.
+
+        </div> */}
+
+        <div 
+          className={` ${bokorFont.className}`}
+          style={{
+            
+            position: 'relative',
+            zIndex: 2, 
+            color: 'white',
+            textAlign: 'left',
+            padding: '20%',
+            // fontFamily: 'Carat, sans-serif',
           }}>
           <h2 
             style={{
@@ -470,9 +513,7 @@ useEffect(() => {
             }}
           >
             <div className='justify-left'>
-            鯨魚擱淺海灘
-            <br/>
-            
+              
             </div>
             
           </h2>
@@ -483,7 +524,9 @@ useEffect(() => {
               textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
             }}
           >
-            See you at the shore
+            在天際出現一頭鯨
+            <br/>
+            平倫必須找回那塊失落的拼圖
           </p>
         </div>  
       </div>
@@ -503,52 +546,57 @@ useEffect(() => {
         }}
       />
       
+
       {/* 可拖曳的拼圖塊 */}
       <div
-        // ref={nodeRef}
-        id="puzzlePiece"
-        // draggable
-        // onDragStart={handleDragStart}
-        // onDragEnd={handleDragEnd}
-        // onPointerDown={handlePointerDown}
-        // onPointerMove={handlePointerMove}
-        // onPointerUp={handlePointerUp}
-        onTouchStart={handleTouchStart}   // 備援的 touch 事件
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
         style={{
-          touchAction: 'none', // 禁止預設觸控行為
-          position: 'absolute',
-          left: `${puzzlePosition.x}px`,
-          top: `${puzzlePosition.y}px`,
-        //   left: isCompleted ? `${holePosition.x}px` : `${puzzlePosition.x}px`,
-        //   top: isCompleted ? `${holePosition.y}px` : `${puzzlePosition.y}px`,
-          width: '100px',
-          height: '100px',
-          backgroundImage: `url(${ImageLoader({ src: 'puzzle-bg-5.png' })})`,
-          // backgroundColor: "#fff",
-          // backgroundColor: isDragging ? 'red' : '#fff',
-          // backgroundColor: puzzleColor, // 使用顏色狀態
-          // backgroundColor: isDragging ? draggingColor : puzzleColor, // 使用拖曳顏色
-          backgroundSize: `${backgroundSize.width}px ${backgroundSize.height}px`,
-          backgroundPosition: `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`,
-          cursor: 'grab',
-          opacity: isDragging ? '0.5' : '1',
-          boxShadow: isDragging 
-            ? '0 8px 16px rgba(0,0,0,0.2), 0 4px 8px rgba(0,0,0,0.1)' 
-            : '0 4px 8px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.1), 0 0 2px rgba(0,0,0,0.1)',
-          clipPath: PUZZLE_SHAPE_PIXELS,
-          WebkitClipPath: PUZZLE_SHAPE_PIXELS,
-        //   zIndex: 3,
-          zIndex: isCompleted ? 10 : 30,
-          // transition: 'all 0.3s ease-in-out',
-          transition: 'border 0.3s ease', // 添加邊框過渡效果
-          // border: borderStyle, // 使用邊框樣式狀態
-          outline: '4px solid white', // 使用 outline 來顯示邊框
-          outlineOffset: '-4px', // 調整邊框位置
-          // transition: 'background-color 0.3s ease', 
+          // position: 'absolute',
+          // left: `${puzzlePosition.x}px`,
+          // top: `${puzzlePosition.y}px`,
+          // width: '100px',
+          // height: '100px',
+          // boxShadow: '0 4px 8px rgba(0,0,0,0.5)',  // 包裹的陰影
+          // filter: 'drop-shadow(0 4px 8px rgba(0,0,100,0.8))'
+          //  drop-shadow(0 200px 400px rgba(0,0,0,0.1)) drop-shadow(0 0 2px rgba(0,0,0,0.1))',
         }}
-      />
+      >
+        <div
+          id="puzzlePiece"
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onTouchStart={handleTouchStart}   // 備援的 touch 事件
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          style={{
+            touchAction: 'none', // 禁止預設觸控行為
+            position: 'absolute',
+            left: `${puzzlePosition.x}px`,
+            top: `${puzzlePosition.y}px`,
+            width: '100px',
+            height: '100px',
+            backgroundImage: `url(${ImageLoader({ src: 'puzzle-bg-5.png' })})`,
+            backgroundSize: `${backgroundSize.width}px ${backgroundSize.height}px`,
+            backgroundPosition: `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`,
+            cursor: 'grab',
+            // opacity: isDragging ? '0.5' : '1',
+            
+            // clipPath: PUZZLE_SHAPE_PIXELS,
+            // WebkitClipPath: PUZZLE_SHAPE_PIXELS,
+          //   zIndex: 3,
+            boxShadow: '0 40px 50px rgba(0,0,0,1), 0 40px 20px rgba(0,0,0,0.6)',
+            zIndex: isCompleted ? 10 : 30,
+            // transition: 'all 0.3s ease-in-out',
+            // transition: 'border 0.3s ease', // 添加邊框過渡效果
+            // border: borderStyle, // 使用邊框樣式狀態骯
+            // outline: '4px solid white', // 使用 outline 來顯示邊框
+            // outlineOffset: '-4px', // 調整邊框位置
+            // transition: 'background-color 0.3s ease', 
+          }}
+        />
+      
+      </div>
+     
 
       <div>
         {/* 被切下來的底圖 */}
@@ -562,8 +610,8 @@ useEffect(() => {
             // backgroundImage: "url('/bottom-img.png')",
             backgroundSize: `${windowSize.width}px ${windowSize.height}px`,
             backgroundPosition: `-${holePosition.x}px -${holePosition.y}px`,
-            clipPath: PUZZLE_SHAPE_PIXELS,
-            WebkitClipPath: PUZZLE_SHAPE_PIXELS,
+            // clipPath: PUZZLE_SHAPE_PIXELS,
+            // WebkitClipPath: PUZZLE_SHAPE_PIXELS,
             backgroundColor: '#332', // 使用與底層背景相同的顏色
             zIndex: 5,
           }}
@@ -609,8 +657,8 @@ useEffect(() => {
           backgroundSize: `${backgroundSize.width}px ${backgroundSize.height}px`,
           backgroundPosition: `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`,
           opacity: isOverDropZone && !isCompleted ? 0.5 : 0,
-          clipPath: PUZZLE_SHAPE_PIXELS,
-          WebkitClipPath: PUZZLE_SHAPE_PIXELS,
+          // clipPath: PUZZLE_SHAPE_PIXELS,
+          // WebkitClipPath: PUZZLE_SHAPE_PIXELS,
           zIndex: 8,
           transition: 'opacity 0.3s ease-in-out',
         }}
@@ -625,7 +673,7 @@ useEffect(() => {
             top: `${holePosition.y - 50}px`,
             width: '200px',
             height: '200px',
-            background: 'radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%)',
+            background: 'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%)',
             animation: 'completion-glow 2s ease-out',
             zIndex: 9,
             pointerEvents: 'none',

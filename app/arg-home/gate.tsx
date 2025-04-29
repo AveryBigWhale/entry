@@ -438,7 +438,7 @@ export default function Page() {
             
             position: 'relative',
             zIndex: 2, 
-            color: 'white',
+            // 
             textAlign: 'left',
             padding: '20%',
             // fontFamily: 'Carat, sans-serif',
@@ -448,28 +448,60 @@ export default function Page() {
               fontSize: '32px',
               marginBottom: '5px',
               fontWeight: 'bold',
+              // color: 'white',
+              color: 'rgba(255, 255, 255, 0.91)',
               textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
               // 
 
             }}
           >
             <div className='justify-left'>
-              
+            最終我們
+            <br/>
+            都在
+            <br/>
+            潮間帶
+            <br/>
+            交會
             </div>
-            
-          </h2>
-          <p 
+            <p 
             style={{
-              fontSize: '32px',
+              fontSize: '24px',
               lineHeight: '1.6',
               textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
             }}
           >
-            在天際出現一頭鯨
-            <br/>
-            平倫必須找回那塊失落的拼圖
+            See you at the shore
           </p>
+          </h2>
+          <div 
+            className={` ${bokorFont.className}`}
+            style={{
+              
+              position: 'relative',
+              zIndex: 2, 
+              color: 'rgba(255, 255, 255, 0.91)',
+              // color: 'white',
+              textAlign: 'right',
+              padding: '0%',
+
+              // fontFamily: 'Carat, sans-serif',
+            }}>
+            <p 
+              style={{
+                fontSize: '20px',
+                lineHeight: '1.6',
+                // textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+              }}
+            >
+              平倫在沙灘擱淺
+              <br/>
+              記憶紛亂散佚
+
+            </p>
+          </div>
         </div>  
+        
       </div>
       
       {/* 漸層遮罩層 */}
@@ -519,8 +551,8 @@ export default function Page() {
             backgroundImage: `url(${ImageLoader({ src: 'puzzle-bg-5.png' })})`,
             backgroundSize: `${backgroundSize.width}px ${backgroundSize.height}px`,
             // backgroundPosition: `${backgroundPosition.x}px ${backgroundPosition.y}px`,
-            // backgroundPosition: `${backgroundPosition.x - holePosition.x}px ${backgroundPosition.y - holePosition.y}px`,
-            backgroundPosition: `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`,
+            backgroundPosition: `${backgroundPosition.x - holePosition.x}px ${backgroundPosition.y - holePosition.y}px`,
+            // backgroundPosition: `${-holePosition.x + backgroundPosition.x}px ${-holePosition.y + backgroundPosition.y}px`,
             cursor: 'grab',
             // opacity: isDragging ? '0.5' : '1',
             

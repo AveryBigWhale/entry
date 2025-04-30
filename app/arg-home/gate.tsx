@@ -462,7 +462,7 @@ export default function Page() {
         }}
       /> */}
 
-      {safeZone && (
+      {/* {safeZone && (
         <div
           style={{
             position: 'absolute',
@@ -474,7 +474,7 @@ export default function Page() {
             zIndex: 1000, // 根據需求調整層級
           }}
         />
-      )}
+      )} */}
       
       {/* 底層背景 */}
       <div

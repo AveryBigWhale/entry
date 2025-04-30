@@ -503,11 +503,11 @@ export default function Page() {
             width: '100%',
             height: '100%',
             // backgroundImage: "url('https://averybigwhale.github.io/entry/public/puzzle-bg-5.png')",
-            backgroundImage: "url('/puzzle-bg-5.png')",
+            // backgroundImage: "url('/puzzle-bg-5.png')",
             
             // backgroundColor: '#333',
             
-            // backgroundImage: `url(${ImageLoader({ src: 'puzzle-bg-5.png' })})`,
+            backgroundImage: `url(${ImageLoader({ src: 'puzzle-bg-5.png' })})`,
 
             // backgroundSize: 'cover',
             backgroundSize: `${backgroundSize.width}px ${backgroundSize.height }px`,

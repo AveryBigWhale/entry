@@ -1,11 +1,9 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-# ArtFest
-=======
-=======
->>>>>>> e96f53cc594fe863eb81850ac3931da8b41e98e0
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NTU Artfest Web
 
+本專案為台大藝術季第 30 屆（NTU Artfest 30th）ARG 網站。
+
+# 重點
+歡迎大家來台大藝術季！參加 ARG 遊戲！
 ## Getting Started
 
 First, run the development server:

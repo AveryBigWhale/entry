@@ -1,8 +1,6 @@
 # NTU Artfest Web
 
 本專案為台大藝術季第 30 屆（NTU Artfest 30th）ARG 網站。
-
-# 重點
 歡迎大家來台大藝術季！參加 ARG 遊戲！
 ## Getting Started
 
